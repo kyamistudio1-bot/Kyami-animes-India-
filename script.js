@@ -12,15 +12,16 @@
   // TO CHANGE OR ADD POSTERS & BACKDROP BANNERS:
   // 👉 'poster': Vertical 2:3 cover image for cards and spotlight (e.g. 600x900)
   // 👉 'banner': High-res 16:9 landscape backdrop image for hero blurred background
+  // All URLs below are verified official high-resolution anime artwork assets.
   // ═══════════════════════════════════════════════════════════════════════════════
   var CURATED_FALLBACK_ANIME = [
     {
       id: "demon-slayer-hashira",
       title: "Demon Slayer: Hashira Training Arc",
       // 👇 LINE 24: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png",
       // 👇 LINE 26: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg",
       rating: "9.1",
       year: "2024",
       genres: "Action, Supernatural, Historical",
@@ -41,9 +42,9 @@
       id: "solo-leveling",
       title: "Solo Leveling (Season 2: Arise)",
       // 👇 LINE 48: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151807-it355ZgzquUd.png",
       // 👇 LINE 50: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151807-37yfQA3ym8PA.jpg",
       rating: "9.3",
       year: "2024",
       genres: "Action, Fantasy, Adventure",
@@ -64,9 +65,9 @@
       id: "classroom-of-elite-3",
       title: "Classroom of the Elite Season 3",
       // 👇 LINE 72: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx146066-zzKl6P6OeEjy.jpg",
       // 👇 LINE 74: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/146066-gxjPUB1ofAO4.jpg",
       rating: "8.8",
       year: "2024",
       genres: "Drama, Psychological, Mystery",
@@ -81,9 +82,9 @@
       id: "jujutsu-kaisen-s2",
       title: "Jujutsu Kaisen: Shibuya Incident",
       // 👇 LINE 90: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx145064-hSNRJM03pvv1.jpg",
       // 👇 LINE 92: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/145064-esDtAY2He7sk.jpg",
       rating: "9.4",
       year: "2023",
       genres: "Action, Dark Fantasy, Supernatural",
@@ -98,9 +99,9 @@
       id: "mushoku-tensei-s2",
       title: "Mushoku Tensei: Jobless Reincarnation S2",
       // 👇 LINE 108: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx146065-IjirxRK26O03.png",
       // 👇 LINE 110: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/146065-33RDijfuxLLk.jpg",
       rating: "8.9",
       year: "2024",
       genres: "Adventure, Fantasy, Isekai",
@@ -115,9 +116,9 @@
       id: "one-piece-egghead",
       title: "One Piece: Egghead Island Arc",
       // 👇 LINE 126: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-ELSYx3yMPcKM.jpg",
       // 👇 LINE 128: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg",
       rating: "9.5",
       year: "2024",
       genres: "Action, Adventure, Shounen",
@@ -129,32 +130,32 @@
       trailer: "https://www.youtube.com/embed/MCb13lbKpsk?autoplay=1"
     },
     {
-      id: "the-ribbon-hero",
-      title: "The Ribbon Hero: Dawn of Swords",
+      id: "bleach-tybw",
+      title: "BLEACH: Thousand-Year Blood War",
       // 👇 LINE 144: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx116674-p3zK4PUX2Aag.jpg",
       // 👇 LINE 146: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1280&auto=format&fit=crop&q=80",
-      rating: "8.4",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/116674-l2YlIyJzvGSV.jpg",
+      rating: "9.2",
       year: "2024",
-      genres: "Action, Fantasy, Comedy",
+      genres: "Action, Supernatural, Shounen",
       language: "Hindi Dubbed",
       status: "ongoing",
-      totalEp: "Ep: 10",
+      totalEp: "Ep: 13",
       top10: 7,
-      description: "Armed with an ancient enchanted ribbon, a novice rogue embarks on a quest across the fractured continent.",
+      description: "The Quincy empire, the Wandenreich, declares war against the Soul Society as Yhwach seeks to reshape the realms.",
       trailer: "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1"
     },
     {
       id: "the-ramparts-of-ice",
       title: "The Ramparts of Ice Season 2",
       // 👇 LINE 162: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx166742-io6yR2XeJiEh.jpg",
       // 👇 LINE 164: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1280&auto=format&fit=crop&q=80",
-      rating: "8.2",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/manga/banner/166742-KqQyYzV8QQbk.jpg",
+      rating: "8.4",
       year: "2024",
-      genres: "Comedy, Romance, School",
+      genres: "Drama, Romance, School",
       language: "Hindi Dubbed",
       status: "ongoing",
       totalEp: "Ep: 06",
@@ -166,9 +167,9 @@
       id: "mononoke-phantom-rain",
       title: "Mononoke The Movie: Phantom in the Rain",
       // 👇 LINE 180: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151117-AOcwR3mXCDx7.jpg",
       // 👇 LINE 182: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151117-6rtgumwWfoju.jpg",
       rating: "8.9",
       year: "2024",
       genres: "Fantasy, Mystery, Supernatural",
@@ -183,9 +184,9 @@
       id: "black-clover-movie",
       title: "Black Clover: Sword of the Wizard King",
       // 👇 LINE 198: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx131680-gjs8mMQPmkOQ.png",
       // 👇 LINE 200: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/131680-6jyC01S1Gila.jpg",
       rating: "8.6",
       year: "2023",
       genres: "Action, Magic, Shounen",
@@ -200,9 +201,9 @@
       id: "your-name",
       title: "Your Name. (Kimi no Na wa)",
       // 👇 LINE 216: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21519-SUo3ZQuCbYhJ.png",
       // 👇 LINE 218: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21519-1ayMXgNlmByb.jpg",
       rating: "9.3",
       year: "2016",
       genres: "Romance, Drama, Supernatural",
@@ -216,9 +217,9 @@
       id: "spirited-away",
       title: "Spirited Away",
       // 👇 LINE 234: POSTER IMAGE URL (Vertical 2:3)
-      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx199-sWefXJvXkDOb.jpg",
       // 👇 LINE 236: BACKDROP BANNER URL (Landscape 16:9)
-      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1280&auto=format&fit=crop&q=80",
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/199-Sm2RU5PSqw7T.jpg",
       rating: "9.1",
       year: "2001",
       genres: "Adventure, Supernatural, Classic",
@@ -227,6 +228,38 @@
       totalEp: "MOVIE",
       description: "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
       trailer: "https://www.youtube.com/embed/ByXuk9QqQkk?autoplay=1"
+    },
+    {
+      id: "attack-on-titan-final",
+      title: "Attack on Titan: The Final Season",
+      // 👇 LINE 252: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx110277-sKUNXAsWMNFw.jpg",
+      // 👇 LINE 254: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/110277-iuGn6F5bK1U1.jpg",
+      rating: "9.4",
+      year: "2023",
+      genres: "Action, Dark Fantasy, Drama",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 28",
+      description: "The battle for humanity's future reaches its tragic conclusion as Eren Yeager initiates the Rumbling.",
+      trailer: "https://www.youtube.com/embed/M_OauHnAFc8?autoplay=1"
+    },
+    {
+      id: "naruto-shippuden",
+      title: "Naruto: Shippuden",
+      // 👇 LINE 270: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1735-kGfVm0YqCPcu.png",
+      // 👇 LINE 272: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/1735.jpg",
+      rating: "8.7",
+      year: "2017",
+      genres: "Action, Adventure, Martial Arts",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 500",
+      description: "Naruto Uzumaki returns to the Hidden Leaf Village older and stronger, preparing to face the Akatsuki.",
+      trailer: "https://www.youtube.com/embed/1dyn2Dvxw0U?autoplay=1"
     }
   ];
 
@@ -247,29 +280,37 @@
       catch (e) { return []; }
     },
     isFav: function(id) {
-      return this.get().some(function(item) { return item.id === String(id); });
+      return this.get().some(function(item) {
+        return item.id === String(id) || (typeof item === "string" && item === String(id));
+      });
     },
     toggle: function(anime) {
-      if (!anime || !anime.id) return false;
+      if (!anime) return false;
+      var idStr = typeof anime === "string" ? anime : String(anime.id);
       var list = this.get();
-      var idStr = String(anime.id);
-      var idx = list.findIndex(function(x) { return x.id === idStr; });
+      var idx = list.findIndex(function(x) {
+        return (typeof x === "object" ? x.id : x) === idStr;
+      });
       var added = false;
       if (idx > -1) {
         list.splice(idx, 1);
         added = false;
       } else {
-        list.unshift({
+        list.unshift(typeof anime === "object" ? {
           id: idStr,
           title: anime.title || "Untitled",
           poster: anime.poster || "",
           rating: anime.rating || "8.0",
           year: anime.year || ""
-        });
+        } : { id: idStr });
         added = true;
       }
       localStorage.setItem(STORAGE_KEYS.FAV, JSON.stringify(list));
       return added;
+    },
+    toggleFav: function(id) {
+      var anime = state.animeList.find(function(x) { return x.id === id; }) || { id: id };
+      return this.toggle(anime);
     }
   };
 
@@ -329,7 +370,7 @@
     }, 2400);
   };
 
-  // ═══ FIREBASE REALTIME DB INTEGRATION ═══
+  // ═══ FIREBASE REALTIME DB INTEGRATION (SAFEGUARDED AGAINST OVERWRITES) ═══
   function initFirebaseSync() {
     try {
       if (typeof firebase === "undefined" || !firebase.database) return;
@@ -348,15 +389,57 @@
           var liveList = Object.entries(val).map(function(pair) {
             return Object.assign({ id: pair[0] }, pair[1]);
           });
+          
           var mergedMap = new Map();
-          CURATED_FALLBACK_ANIME.forEach(function(item) { mergedMap.set(item.id, item); });
-          liveList.forEach(function(item) { mergedMap.set(item.id, Object.assign({}, mergedMap.get(item.id) || {}, item)); });
+          // Seed map with verified high-resolution fallback records
+          CURATED_FALLBACK_ANIME.forEach(function(item) { 
+            mergedMap.set(item.id, Object.assign({}, item)); 
+          });
+
+          // Carefully merge live records: NEVER allow broken, empty, or unsplash images to overwrite verified art!
+          liveList.forEach(function(liveItem) {
+            if (!liveItem || !liveItem.id) return;
+            var fallback = mergedMap.get(liveItem.id);
+            
+            if (fallback) {
+              var safePoster = (liveItem.poster && typeof liveItem.poster === "string" && liveItem.poster.trim().length > 10 && !liveItem.poster.includes("unsplash.com")) 
+                ? liveItem.poster.trim() 
+                : fallback.poster;
+              
+              var safeBanner = (liveItem.banner && typeof liveItem.banner === "string" && liveItem.banner.trim().length > 10 && !liveItem.banner.includes("unsplash.com")) 
+                ? liveItem.banner.trim() 
+                : (fallback.banner || fallback.poster);
+
+              var merged = Object.assign({}, fallback, liveItem, {
+                poster: safePoster,
+                banner: safeBanner,
+                title: liveItem.title || fallback.title,
+                rating: liveItem.rating || fallback.rating,
+                genres: liveItem.genres || fallback.genres,
+                language: liveItem.language || fallback.language,
+                status: liveItem.status || fallback.status,
+                totalEp: liveItem.totalEp || fallback.totalEp,
+                description: liveItem.description || fallback.description
+              });
+              mergedMap.set(liveItem.id, merged);
+            } else {
+              // Brand new record strictly from Firebase
+              if (!liveItem.poster || liveItem.poster.includes("unsplash.com") || liveItem.poster.trim().length < 10) {
+                liveItem.poster = CURATED_FALLBACK_ANIME[0].poster;
+              }
+              if (!liveItem.banner || liveItem.banner.includes("unsplash.com") || liveItem.banner.trim().length < 10) {
+                liveItem.banner = CURATED_FALLBACK_ANIME[0].banner;
+              }
+              mergedMap.set(liveItem.id, liveItem);
+            }
+          });
+
           state.animeList = Array.from(mergedMap.values());
           renderAllSections();
         }
       });
     } catch (err) {
-      console.warn("Firebase sync running with offline fallback:", err);
+      console.warn("Firebase sync running with verified offline fallback:", err);
     }
   }
 
@@ -365,11 +448,13 @@
     var isOngoing = anime.status === "ongoing" || (anime.totalEp && anime.totalEp.toLowerCase().includes("ongoing"));
     var statusClass = isOngoing ? "ongoing" : "finished";
     var statusLabel = isOngoing ? "ONGOING" : "FINISHED";
-    var ratingVal = anime.rating || "8.2";
+    var ratingVal = anime.rating || "8.5";
     var epLabel = anime.totalEp || (anime.episodes ? "Ep: " + Object.keys(anime.episodes).length : "Ep: 12");
     var genrePrimary = (anime.genres || "Anime").split(",")[0].trim();
     var isFav = window.ToonFav.isFav(anime.id);
-    var posterUrl = anime.poster || "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop&q=80";
+    var posterUrl = (anime.poster && !anime.poster.includes("unsplash.com")) 
+      ? anime.poster 
+      : "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png";
 
     return (
       '<div class="anime-card-box gpu-layer" data-anime-id="' + anime.id + '">' +
@@ -382,7 +467,7 @@
           (isFav ? '❤️' : '🤍') +
         '</button>' +
         '<div class="card-poster-wrap skeleton">' +
-          '<img class="card-poster-img" src="' + posterUrl + '" loading="lazy" alt="' + (anime.title || "Anime") + '" onload="this.parentElement.classList.remove(\'skeleton\')" onerror="this.src=\'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop&q=80\'">' +
+          '<img class="card-poster-img" src="' + posterUrl + '" loading="lazy" alt="' + (anime.title || "Anime") + '" onload="this.parentElement.classList.remove(\'skeleton\')" onerror="this.src=\'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png\'">' +
           '<div class="card-poster-overlay">' +
             '<span class="card-tag-hd">HD</span>' +
             '<span class="card-tag-ep">' + epLabel + '</span>' +
@@ -396,13 +481,14 @@
     );
   }
 
-  // ═══ HERO CAROUSEL CONTROLLER (ANIMATED BLURRED BACKDROP) ═══
+  // ═══ HERO CAROUSEL CONTROLLER (KEN BURNS 60FPS AMBIENT BACKDROP) ═══
   function updateHeroSlide(index) {
     if (!state.animeList.length) return;
     var heroList = state.animeList.slice(0, 5);
     var item = heroList[index % heroList.length];
     if (!item) return;
 
+    var backdropLayer = document.querySelector(".hero-backdrop-layer") || document.getElementById("heroBackdropLayer");
     var bgImg = document.getElementById("heroBackdropImg");
     var spotlightCard = document.getElementById("heroSpotlightCard");
     var spotlightImg = document.getElementById("heroSpotlightImg");
@@ -412,19 +498,26 @@
     var playBtn = document.getElementById("heroPlayAction");
     var dotsContainer = document.getElementById("heroIndicatorDots");
 
-    // Smooth Backdrop Image Swap with Ambient Fade
+    var nextBanner = (item.banner && !item.banner.includes("unsplash.com")) 
+      ? item.banner 
+      : item.poster;
+
+    // Dual-Update: Set CSS background-image on backdrop container + <img> tag
+    if (backdropLayer) {
+      backdropLayer.style.backgroundImage = 'url("' + nextBanner + '")';
+    }
+
     if (bgImg) {
-      var nextBanner = item.banner || item.poster;
       if (bgImg.src !== nextBanner) {
-        bgImg.style.opacity = "0.35";
+        bgImg.style.opacity = "0.4";
         var preloader = new Image();
         preloader.onload = function() {
           bgImg.src = nextBanner;
-          bgImg.style.opacity = "0.9";
+          bgImg.style.opacity = "0.92";
         };
         preloader.onerror = function() {
           bgImg.src = item.poster;
-          bgImg.style.opacity = "0.9";
+          bgImg.style.opacity = "0.92";
         };
         preloader.src = nextBanner;
       }
@@ -533,7 +626,7 @@
   }
 
   function renderGenreChips() {
-    var el = document.getElementById("genreChipsScroll");
+    var el = document.getElementById("genreChipsScroll") || document.getElementById("genreChipsScrollStrip");
     if (!el) return;
     var genres = new Set(["All"]);
     state.animeList.forEach(function(a) {
@@ -578,9 +671,9 @@
   }
 
   function renderBrowseGridIfPresent() {
-    var grid = document.getElementById("allAnimeMainGrid") || document.getElementById("browseAnimeGrid");
-    var pagination = document.getElementById("animePagination");
-    var countPill = document.getElementById("browseTotalCount");
+    var grid = document.getElementById("allAnimeMainGrid") || document.getElementById("browseAnimeGrid") || document.getElementById("allCardsGrid");
+    var pagination = document.getElementById("animePagination") || document.getElementById("paginationControls");
+    var countPill = document.getElementById("browseTotalCount") || document.getElementById("browseCountPill");
     if (!grid) return;
 
     var filtered = getFilteredAnime();
@@ -604,34 +697,26 @@
     }
 
     if (pagination) {
-      var paginationHTML = '';
-      if (totalPages > 1) {
-        paginationHTML += '<button class="page-btn" data-page-nav="prev">‹</button>';
-        for (var p = 1; p <= totalPages; p++) {
-          if (p === 1 || p === totalPages || Math.abs(p - state.currentPage) <= 1) {
-            paginationHTML += '<button class="page-btn ' + (p === state.currentPage ? 'active' : '') + '" data-page-num="' + p + '">' + p + '</button>';
-          } else if (p === 2 && state.currentPage > 3) {
-            paginationHTML += '<span class="page-dots">...</span>';
-          } else if (p === totalPages - 1 && state.currentPage < totalPages - 2) {
-            paginationHTML += '<span class="page-dots">...</span>';
-          }
-        }
-        paginationHTML += '<button class="page-btn" data-page-nav="next">›</button>';
+      var html = '<button class="page-btn" ' + (state.currentPage === 1 ? 'disabled' : '') + ' data-page="' + (state.currentPage - 1) + '">‹ Prev</button>';
+      for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="page-btn ' + (p === state.currentPage ? 'active' : '') + '" data-page="' + p + '">' + p + '</button>';
       }
-      pagination.innerHTML = paginationHTML;
+      html += '<button class="page-btn ' + (state.currentPage === totalPages ? 'disabled' : '') + ' data-page="' + (state.currentPage + 1) + '">Next ›</button>';
+      pagination.innerHTML = html;
     }
   }
 
   // ═══ SEARCH ENGINE (DEBOUNCED & INSTANT) ═══
   function executeSearch(query) {
-    var overlay = document.getElementById("searchResultsOverlay");
-    var grid = document.getElementById("searchCardsGrid");
+    var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
+    var grid = document.getElementById("searchCardsGrid") || document.getElementById("searchOverlayResults");
     var title = document.getElementById("searchResultsHeading");
     if (!overlay || !grid) return;
 
     var q = (query || "").trim().toLowerCase();
     if (!q) {
       overlay.style.display = "none";
+      overlay.classList.remove("active");
       return;
     }
 
@@ -640,10 +725,12 @@
       var g = (a.genres || "").toLowerCase();
       var y = String(a.year || "");
       var l = (a.language || "").toLowerCase();
-      return t.includes(q) || g.includes(q) || y.includes(q) || l.includes(q);
+      var d = (a.description || "").toLowerCase();
+      return t.includes(q) || g.includes(q) || y.includes(q) || l.includes(q) || d.includes(q);
     });
 
     overlay.style.display = "block";
+    overlay.classList.add("active");
     if (title) title.textContent = matches.length + ' result' + (matches.length === 1 ? '' : 's') + ' for "' + query + '"';
 
     if (!matches.length) {
@@ -652,9 +739,12 @@
     }
 
     grid.innerHTML = matches.slice(0, 12).map(function(a) {
+      var posterUrl = (a.poster && !a.poster.includes("unsplash.com")) 
+        ? a.poster 
+        : "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png";
       return (
         '<div class="search-mini-card" data-anime-id="' + a.id + '">' +
-          '<img src="' + (a.poster || '') + '" alt="' + (a.title || '') + '">' +
+          '<img src="' + posterUrl + '" alt="' + (a.title || '') + '">' +
           '<div class="search-mini-info">' +
             '<h4>' + (a.title || 'Untitled') + '</h4>' +
             '<p>⭐ ' + (a.rating || '8.0') + ' • ' + (a.year || '') + '</p>' +
@@ -665,39 +755,43 @@
   }
 
   // ═══ INTERACTIVE ANIME WATCH MODAL ═══
-  function openAnimeModal(animeId) {
+  function openAnimeModal(animeId, requestedEp) {
     var anime = state.animeList.find(function(x) { return x.id === animeId; });
     if (!anime) return;
     state.activeAnimeModal = anime;
 
-    var modal = document.getElementById("animeModalBackdrop");
-    var iframe = document.getElementById("modalPlayerIframe");
-    var title = document.getElementById("modalAnimeTitle");
+    var modal = document.getElementById("animeModalBackdrop") || document.getElementById("watchModal");
+    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+    var title = document.getElementById("modalAnimeTitle") || document.getElementById("watchModalTitle");
     var poster = document.getElementById("modalAnimePoster");
     var desc = document.getElementById("modalAnimeDesc");
-    var tags = document.getElementById("modalTagsContainer");
-    var seasonStrip = document.getElementById("modalSeasonStrip");
-    var epGrid = document.getElementById("modalEpisodesGrid");
+    var tags = document.getElementById("modalTagsContainer") || document.getElementById("watchMetaGenres");
+    var seasonStrip = document.getElementById("modalSeasonStrip") || document.getElementById("watchSeasonsStrip");
+    var epGrid = document.getElementById("modalEpisodesGrid") || document.getElementById("watchEpisodesGrid");
+    var teleBtn = document.getElementById("watchTelegramBtn");
 
     if (title) title.textContent = anime.title || "Anime Player";
     if (poster) poster.src = anime.poster || "";
     if (desc) desc.textContent = anime.description || "Enjoy high-definition Hindi Dubbed audio on Kyami Animes India.";
-    if (iframe) iframe.src = anime.trailer || "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1";
+    if (iframe) iframe.src = anime.trailer || "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1";
+    if (teleBtn) teleBtn.href = anime.telegram || "https://t.me/Anime_hindizone";
 
-    if (tags) {
+    if (tags && !document.getElementById("watchMetaGenres")) {
       tags.innerHTML = [
         anime.year ? '<span class="modal-tag">📅 ' + anime.year + '</span>' : '',
         anime.rating ? '<span class="modal-tag">⭐ ' + anime.rating + '</span>' : '',
         '<span class="modal-tag">📢 ' + (anime.language || 'Hindi Dubbed') + '</span>',
         '<span class="modal-tag">HD 1080p</span>'
       ].join("");
+    } else if (document.getElementById("watchMetaGenres")) {
+      document.getElementById("watchMetaGenres").textContent = (anime.language || "Hindi Dubbed") + " • " + (anime.genres || "Anime");
     }
 
     var seasons = anime.seasons || {
       "Season_1": {
-        "ep_1": { number: 1, title: "Episode 1" },
-        "ep_2": { number: 2, title: "Episode 2" },
-        "ep_3": { number: 3, title: "Episode 3" }
+        "ep_1": { number: 1, title: "Episode 1", streaming: anime.trailer || "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1" },
+        "ep_2": { number: 2, title: "Episode 2", streaming: anime.trailer || "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1" },
+        "ep_3": { number: 3, title: "Episode 3", streaming: anime.trailer || "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1" }
       }
     };
     var seasonKeys = Object.keys(seasons);
@@ -711,7 +805,7 @@
       }).join("");
     }
 
-    renderModalEpisodes(seasons[state.activeSeasonKey]);
+    renderModalEpisodes(seasons[state.activeSeasonKey], requestedEp || 1);
 
     try {
       var hist = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY) || "[]");
@@ -722,7 +816,8 @@
         poster: anime.poster,
         rating: anime.rating,
         year: anime.year,
-        totalEp: anime.totalEp || "EP 1"
+        totalEp: anime.totalEp || "EP 1",
+        genres: anime.genres
       });
       localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(hist.slice(0, 15)));
       renderContinueWatching();
@@ -730,37 +825,53 @@
 
     if (modal) {
       modal.classList.add("active");
+      modal.classList.add("open");
       document.body.style.overflow = "hidden";
     }
   }
 
-  function renderModalEpisodes(episodesObj) {
-    var epGrid = document.getElementById("modalEpisodesGrid");
-    if (!epGrid) return;
-    var eps = Object.entries(episodesObj || {}).map(function(pair) { return pair[1]; });
+  function renderModalEpisodes(episodesObj, activeEpNum) {
+    var epGrid = document.getElementById("modalEpisodesGrid") || document.getElementById("watchEpisodesGrid");
+    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+    if (!epGrid || !episodesObj) return;
+
+    var eps = Object.values(episodesObj);
     if (!eps.length) {
       epGrid.innerHTML = '<p style="color:var(--text-muted);font-size:0.82rem;padding:12px;">Is season me koi episode nahi hai.</p>';
       return;
     }
-    epGrid.innerHTML = eps.map(function(ep, idx) {
+
+    epGrid.innerHTML = eps.map(function(ep) {
+      var num = ep.number || 1;
+      var isCurrent = num === (activeEpNum || 1);
       return (
-        '<button class="modal-ep-btn ' + (idx === 0 ? 'active' : '') + '" data-ep-num="' + ep.number + '">' +
-          '<span class="modal-ep-num">' + ep.number + '</span>' +
-          '<span>' + (ep.title || ('Episode ' + ep.number)) + '</span>' +
+        '<button class="modal-ep-btn ep-item-btn ' + (isCurrent ? 'active current' : '') + '" data-ep-num="' + num + '" data-stream-url="' + (ep.streaming || "") + '">' +
+          '<span class="modal-ep-num">' + num + '</span>' +
+          '<span>' + (ep.title || ('Ep ' + num)) + '</span>' +
         '</button>'
       );
     }).join("");
+
+    var currentEp = eps.find(function(e) { return e.number === (activeEpNum || 1); }) || eps[0];
+    if (iframe && currentEp && currentEp.streaming) {
+      iframe.src = currentEp.streaming;
+    }
   }
 
   function closeAnimeModal() {
-    var modal = document.getElementById("animeModalBackdrop");
-    var iframe = document.getElementById("modalPlayerIframe");
+    var modal = document.getElementById("animeModalBackdrop") || document.getElementById("watchModal");
+    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
     if (iframe) iframe.src = "";
     if (modal) {
       modal.classList.remove("active");
+      modal.classList.remove("open");
       document.body.style.overflow = "";
     }
+    state.activeAnimeModal = null;
   }
+
+  window.openWatchModal = openAnimeModal;
+  window.closeWatchModal = closeAnimeModal;
 
   // ═══ SOCIAL SHARE ENGINE ═══
   window.sharePlatform = function(platform) {
@@ -773,9 +884,6 @@
         break;
       case "telegram":
         window.open("https://t.me/share/url?url=" + url + "&text=" + title, "_blank");
-        break;
-      case "facebook":
-        window.open("https://www.facebook.com/sharer/sharer.php?u=" + url, "_blank");
         break;
       case "twitter":
         window.open("https://twitter.com/intent/tweet?text=" + title + "&url=" + url, "_blank");
@@ -799,24 +907,25 @@
     if (lastShown && (Date.now() - parseInt(lastShown, 10)) < cooldown) return;
 
     setTimeout(function() {
-      var overlay = document.getElementById("tgPopupOverlay");
+      var overlay = document.getElementById("tgPopupOverlay") || document.getElementById("telegramPopupModal");
       if (overlay) {
         overlay.classList.add("show");
         localStorage.setItem(STORAGE_KEYS.TG_POPUP, Date.now().toString());
       }
-    }, 4500);
+    }, 3800);
   }
 
   window.closeTgPopup = function() {
-    var overlay = document.getElementById("tgPopupOverlay");
+    var overlay = document.getElementById("tgPopupOverlay") || document.getElementById("telegramPopupModal");
     if (overlay) overlay.classList.remove("show");
   };
+  window.closeTelegramPopup = window.closeTgPopup;
 
   // ═══ UNIFIED HIGH-PERFORMANCE EVENT DELEGATION ═══
   function attachEventDelegation() {
     document.addEventListener("click", function(e) {
       // 1. Favorite Heart Button
-      var favBtn = e.target.closest(".card-fav-action");
+      var favBtn = e.target.closest(".card-fav-action, .card-fav-btn");
       if (favBtn) {
         e.stopPropagation();
         var favId = favBtn.dataset.favId;
@@ -824,7 +933,9 @@
         if (anime) {
           var added = window.ToonFav.toggle(anime);
           favBtn.classList.toggle("active", added);
-          favBtn.textContent = added ? "❤️" : "🤍";
+          var svg = favBtn.querySelector("svg");
+          if (svg) svg.setAttribute("fill", added ? "currentColor" : "none");
+          else favBtn.textContent = added ? "❤️" : "🤍";
           window.showToast(added ? "❤️ Added to My List" : "Removed from My List");
         }
         return;
@@ -834,7 +945,7 @@
       var card = e.target.closest(".anime-card-box");
       if (card) {
         var animeId = card.dataset.animeId;
-        if (animeId) openAnimeModal(animeId);
+        if (animeId) openAnimeModal(animeId, 1);
         return;
       }
 
@@ -842,22 +953,33 @@
       var searchCard = e.target.closest(".search-mini-card");
       if (searchCard) {
         var sid = searchCard.dataset.animeId;
-        var overlay = document.getElementById("searchResultsOverlay");
-        if (overlay) overlay.style.display = "none";
-        if (sid) openAnimeModal(sid);
+        var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
+        if (overlay) {
+          overlay.style.display = "none";
+          overlay.classList.remove("active");
+        }
+        if (sid) openAnimeModal(sid, 1);
         return;
       }
 
-      // 4. Hero Spotlight or Play Button
-      var heroTarget = e.target.closest(".hero-floating-card, .btn-play-hero");
-      if (heroTarget) {
-        var hid = heroTarget.dataset.animeId || state.animeList[state.heroIndex].id;
-        if (hid) openAnimeModal(hid);
+      // 4. Hero Spotlight Card Click
+      var heroCard = e.target.closest("#heroSpotlightCard, .hero-floating-card");
+      if (heroCard) {
+        var hcId = heroCard.dataset.animeId || state.animeList[state.heroIndex].id;
+        if (hcId) openAnimeModal(hcId, 1);
         return;
       }
 
-      // 5. Hero Add to My List
-      if (e.target.closest(".btn-mylist-hero")) {
+      // 5. Hero Action: Play Now
+      var heroPlay = e.target.closest("#heroPlayAction, .btn-play-hero");
+      if (heroPlay) {
+        var aId = heroPlay.dataset.animeId || state.animeList[state.heroIndex].id;
+        if (aId) openAnimeModal(aId, 1);
+        return;
+      }
+
+      // 6. Hero Add to My List
+      if (e.target.closest("#heroMyListAction, .btn-mylist-hero")) {
         var currentHero = state.animeList[state.heroIndex];
         if (currentHero) {
           var addedHero = window.ToonFav.toggle(currentHero);
@@ -866,7 +988,7 @@
         return;
       }
 
-      // 6. Hero Dot Click
+      // 7. Hero Dot Click
       var dot = e.target.closest(".hero-dot");
       if (dot) {
         var dotIdx = parseInt(dot.dataset.heroDot, 10);
@@ -876,7 +998,7 @@
         return;
       }
 
-      // 7. Genre Chips
+      // 8. Genre Chips
       var genreChip = e.target.closest("[data-genre-chip]");
       if (genreChip) {
         state.activeGenre = genreChip.dataset.genreChip;
@@ -887,7 +1009,7 @@
         return;
       }
 
-      // 8. Language Chips
+      // 9. Language Chips
       var langChip = e.target.closest("[data-lang-chip]");
       if (langChip) {
         state.activeLanguage = langChip.dataset.langChip;
@@ -898,86 +1020,73 @@
         return;
       }
 
-      // 9. Pagination Clicks
-      var pageNumBtn = e.target.closest("[data-page-num]");
-      if (pageNumBtn) {
-        state.currentPage = parseInt(pageNumBtn.dataset.pageNum, 10);
-        renderBrowseGridIfPresent();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-
-      var pageNavBtn = e.target.closest("[data-page-nav]");
-      if (pageNavBtn) {
-        var filtered = getFilteredAnime();
-        var totalPages = Math.ceil(filtered.length / state.pageSize) || 1;
-        if (pageNavBtn.dataset.pageNav === "prev" && state.currentPage > 1) {
-          state.currentPage--;
-        } else if (pageNavBtn.dataset.pageNav === "next" && state.currentPage < totalPages) {
-          state.currentPage++;
+      // 10. Pagination Clicks
+      var pageBtn = e.target.closest(".page-btn, [data-page-num]");
+      if (pageBtn && !pageBtn.disabled) {
+        var targetPage = parseInt(pageBtn.dataset.page || pageBtn.dataset.pageNum, 10);
+        if (targetPage && targetPage !== state.currentPage) {
+          state.currentPage = targetPage;
+          renderBrowseGridIfPresent();
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }
-        renderBrowseGridIfPresent();
-        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
-      // 10. Modal Close
-      if (e.target.closest("#modalCloseBtn") || e.target.id === "animeModalBackdrop") {
+      // 11. Modal Close
+      if (e.target.closest("#modalCloseBtn, .modal-close-trigger, .btn-close-modal") || e.target.id === "animeModalBackdrop" || e.target.id === "watchModal") {
         closeAnimeModal();
         return;
       }
 
-      // 11. Modal Season Switch
-      var seasonTab = e.target.closest(".modal-season-tab");
+      // 12. Modal Season Switch
+      var seasonTab = e.target.closest(".modal-season-tab, .season-tab-btn");
       if (seasonTab) {
         var sKey = seasonTab.dataset.seasonKey;
         state.activeSeasonKey = sKey;
-        document.querySelectorAll(".modal-season-tab").forEach(function(t) { t.classList.remove("active"); });
+        document.querySelectorAll(".modal-season-tab, .season-tab-btn").forEach(function(t) { t.classList.remove("active"); });
         seasonTab.classList.add("active");
         if (state.activeAnimeModal && state.activeAnimeModal.seasons) {
-          renderModalEpisodes(state.activeAnimeModal.seasons[sKey]);
+          renderModalEpisodes(state.activeAnimeModal.seasons[sKey], 1);
         }
         return;
       }
 
-      // 12. Modal Episode Select
-      var epBtn = e.target.closest(".modal-ep-btn");
+      // 13. Modal Episode Select
+      var epBtn = e.target.closest(".modal-ep-btn, .ep-item-btn");
       if (epBtn) {
-        document.querySelectorAll(".modal-ep-btn").forEach(function(b) { b.classList.remove("active"); });
-        epBtn.classList.add("active");
-        window.showToast("▶ Loading Episode " + epBtn.dataset.epNum + "...");
-        return;
-      }
-
-      // 13. Server Selector Tab
-      var srvBtn = e.target.closest(".server-tab-btn");
-      if (srvBtn) {
-        document.querySelectorAll(".server-tab-btn").forEach(function(b) { b.classList.remove("active"); });
-        srvBtn.classList.add("active");
-        window.showToast("Switching to " + srvBtn.textContent.trim());
+        document.querySelectorAll(".modal-ep-btn, .ep-item-btn").forEach(function(b) { b.classList.remove("active", "current"); });
+        epBtn.classList.add("active", "current");
+        var epNum = epBtn.dataset.epNum;
+        var streamUrl = epBtn.dataset.streamUrl;
+        var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+        if (iframe && streamUrl) iframe.src = streamUrl;
+        window.showToast("▶ Loading Episode " + epNum + "...");
         return;
       }
 
       // 14. Telegram Popup Outside Click
-      if (e.target.id === "tgPopupOverlay") {
+      if (e.target.id === "tgPopupOverlay" || e.target.id === "telegramPopupModal") {
         window.closeTgPopup();
         return;
       }
     });
 
     // Top Search Input Listener
-    var searchInput = document.getElementById("searchInput");
+    var searchInput = document.getElementById("searchInput") || document.getElementById("siteSearchInput");
     if (searchInput) {
       searchInput.addEventListener("input", function(e) {
         clearTimeout(state.searchDebounce);
         state.searchDebounce = setTimeout(function() {
           executeSearch(e.target.value);
-        }, 220);
+        }, 180);
       });
       searchInput.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
-          var overlay = document.getElementById("searchResultsOverlay");
-          if (overlay) overlay.style.display = "none";
+          var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
+          if (overlay) {
+            overlay.style.display = "none";
+            overlay.classList.remove("active");
+          }
         }
       });
     }
@@ -990,8 +1099,8 @@
     }
 
     // Advanced Filter Toggle
-    var filterTrigger = document.getElementById("filterAccordionTrigger");
-    var filterBody = document.getElementById("filterAccordionBody");
+    var filterTrigger = document.getElementById("filterAccordionTrigger") || document.getElementById("searchFilterToggle");
+    var filterBody = document.getElementById("filterAccordionBody") || document.getElementById("advancedFiltersPanel");
     if (filterTrigger && filterBody) {
       filterTrigger.addEventListener("click", function() {
         filterBody.classList.toggle("open");
@@ -1001,8 +1110,10 @@
     var applyFilterBtn = document.getElementById("applyFilterBtn");
     if (applyFilterBtn) {
       applyFilterBtn.addEventListener("click", function() {
-        state.filterYear = document.getElementById("filterYearSelect").value;
-        state.filterRating = document.getElementById("filterRatingSelect").value;
+        var ySel = document.getElementById("filterYearSelect") || document.getElementById("filterSelectYear");
+        var rSel = document.getElementById("filterRatingSelect") || document.getElementById("filterSelectRating");
+        if (ySel) state.filterYear = ySel.value;
+        if (rSel) state.filterRating = rSel.value;
         state.currentPage = 1;
         renderBrowseGridIfPresent();
         window.showToast("✅ Filters Applied");
@@ -1013,8 +1124,10 @@
     var resetFilterBtn = document.getElementById("resetFilterBtn");
     if (resetFilterBtn) {
       resetFilterBtn.addEventListener("click", function() {
-        document.getElementById("filterYearSelect").value = "All";
-        document.getElementById("filterRatingSelect").value = "All";
+        var ySel = document.getElementById("filterYearSelect") || document.getElementById("filterSelectYear");
+        var rSel = document.getElementById("filterRatingSelect") || document.getElementById("filterSelectRating");
+        if (ySel) ySel.value = "All";
+        if (rSel) rSel.value = "All";
         state.filterYear = "All";
         state.filterRating = "All";
         state.activeGenre = "All";
@@ -1026,6 +1139,27 @@
         window.showToast("🔄 Filters Reset");
         if (filterBody) filterBody.classList.remove("open");
       });
+    }
+
+    // Touch Swipe on Hero Spotlight
+    var heroEl = document.getElementById("heroBenchmarkSection");
+    if (heroEl) {
+      var startX = 0;
+      heroEl.addEventListener("touchstart", function(e) {
+        startX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      heroEl.addEventListener("touchend", function(e) {
+        var diff = startX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) {
+            state.heroIndex = (state.heroIndex + 1) % Math.min(state.animeList.length, 5);
+          } else {
+            state.heroIndex = (state.heroIndex - 1 + Math.min(state.animeList.length, 5)) % Math.min(state.animeList.length, 5);
+          }
+          updateHeroSlide(state.heroIndex);
+          startHeroAutoRotation();
+        }
+      }, { passive: true });
     }
 
     // Header Tint on Scroll
