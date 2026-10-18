@@ -1,13 +1,237 @@
-// ═══════════════════════════════════════════════════════════════
-// KYAMI ANIMES INDIA — ULTRA-PERFORMANCE CORE SCRIPT (60FPS)
-// Full Feature Preservation + AniReal Benchmark Engine
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════════
+// KYAMI ANIMES INDIA — MASTER SCRIPT ENGINE (60FPS)
+// High-Speed Animations, Dynamic Backdrop Carousel & Full Route Integration
+// ═══════════════════════════════════════════════════════════════════════════════
 
 (function() {
   'use strict';
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // 🎨 MASTER ANIME DATABASE & IMAGE CONFIGURATION
+  // -----------------------------------------------------------------------------
+  // TO CHANGE OR ADD POSTERS & BACKDROP BANNERS:
+  // 👉 'poster': Vertical 2:3 cover image for cards and spotlight (e.g. 600x900)
+  // 👉 'banner': High-res 16:9 landscape backdrop image for hero blurred background
+  // ═══════════════════════════════════════════════════════════════════════════════
+  var CURATED_FALLBACK_ANIME = [
+    {
+      id: "demon-slayer-hashira",
+      title: "Demon Slayer: Hashira Training Arc",
+      // 👇 LINE 24: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 26: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.1",
+      year: "2024",
+      genres: "Action, Supernatural, Historical",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 08",
+      top10: 1,
+      description: "Tanjiro visits the Stone Hashira, Himejima, who intends to prepare him for the battles to come in the ultimate Infinity Castle showdown.",
+      trailer: "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1",
+      seasons: {
+        "Season_1": {
+          "ep_1": { number: 1, title: "To Defeat Muzan Kibutsuji", streaming: "https://www.youtube.com/embed/to2lh1oYqU4", telegram: "https://t.me/Anime_hindizone" },
+          "ep_2": { number: 2, title: "Water Hashira Giyu Tomioka's Pain", streaming: "https://www.youtube.com/embed/to2lh1oYqU4", telegram: "https://t.me/Anime_hindizone" }
+        }
+      }
+    },
+    {
+      id: "solo-leveling",
+      title: "Solo Leveling (Season 2: Arise)",
+      // 👇 LINE 48: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 50: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.3",
+      year: "2024",
+      genres: "Action, Fantasy, Adventure",
+      language: "Hindi Dubbed",
+      status: "ongoing",
+      totalEp: "Ep: 12",
+      top10: 2,
+      description: "In a world where hunters must battle deadly monsters to protect mankind, Sung Jinwoo awakens as the Shadow Monarch.",
+      trailer: "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1",
+      seasons: {
+        "Season_1": {
+          "ep_1": { number: 1, title: "I'm Used to It", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" },
+          "ep_2": { number: 2, title: "If I Had One More Chance", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" }
+        }
+      }
+    },
+    {
+      id: "classroom-of-elite-3",
+      title: "Classroom of the Elite Season 3",
+      // 👇 LINE 72: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 74: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.8",
+      year: "2024",
+      genres: "Drama, Psychological, Mystery",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 13",
+      top10: 3,
+      description: "Kiyotaka Ayanokoji continues his calculated maneuverings in the Tokyo Metropolitan Advanced Nurturing High School.",
+      trailer: "https://www.youtube.com/embed/a6R_p6vP_Y8?autoplay=1"
+    },
+    {
+      id: "jujutsu-kaisen-s2",
+      title: "Jujutsu Kaisen: Shibuya Incident",
+      // 👇 LINE 90: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 92: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.4",
+      year: "2023",
+      genres: "Action, Dark Fantasy, Supernatural",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 23",
+      top10: 4,
+      description: "On October 31st, a veil descends upon Shibuya. Satoru Gojo is lured into a trap orchestrated by curse users.",
+      trailer: "https://www.youtube.com/embed/pkZXflZlqK4?autoplay=1"
+    },
+    {
+      id: "mushoku-tensei-s2",
+      title: "Mushoku Tensei: Jobless Reincarnation S2",
+      // 👇 LINE 108: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 110: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.9",
+      year: "2024",
+      genres: "Adventure, Fantasy, Isekai",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "Ep: 24",
+      top10: 5,
+      description: "Rudeus Greyrat enters Ranoa Magic Academy looking for clues regarding the Teleportation Incident and his mother.",
+      trailer: "https://www.youtube.com/embed/5aGZc6YJ4xY?autoplay=1"
+    },
+    {
+      id: "one-piece-egghead",
+      title: "One Piece: Egghead Island Arc",
+      // 👇 LINE 126: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 128: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.5",
+      year: "2024",
+      genres: "Action, Adventure, Shounen",
+      language: "Hindi Subbed",
+      status: "ongoing",
+      totalEp: "Ep: Ongoing",
+      top10: 6,
+      description: "The Straw Hat Pirates arrive at Egghead, the Island of the Future, uncovering secrets of the Void Century.",
+      trailer: "https://www.youtube.com/embed/MCb13lbKpsk?autoplay=1"
+    },
+    {
+      id: "the-ribbon-hero",
+      title: "The Ribbon Hero: Dawn of Swords",
+      // 👇 LINE 144: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 146: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.4",
+      year: "2024",
+      genres: "Action, Fantasy, Comedy",
+      language: "Hindi Dubbed",
+      status: "ongoing",
+      totalEp: "Ep: 10",
+      top10: 7,
+      description: "Armed with an ancient enchanted ribbon, a novice rogue embarks on a quest across the fractured continent.",
+      trailer: "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1"
+    },
+    {
+      id: "the-ramparts-of-ice",
+      title: "The Ramparts of Ice Season 2",
+      // 👇 LINE 162: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 164: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.2",
+      year: "2024",
+      genres: "Comedy, Romance, School",
+      language: "Hindi Dubbed",
+      status: "ongoing",
+      totalEp: "Ep: 06",
+      top10: 8,
+      description: "High school friendships grow warmer in the harsh winter as misunderstood loner Koyuki discovers true empathy.",
+      trailer: "https://www.youtube.com/embed/a6R_p6vP_Y8?autoplay=1"
+    },
+    {
+      id: "mononoke-phantom-rain",
+      title: "Mononoke The Movie: Phantom in the Rain",
+      // 👇 LINE 180: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 182: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.9",
+      year: "2024",
+      genres: "Fantasy, Mystery, Supernatural",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "MOVIE",
+      top10: 9,
+      description: "The Medicine Seller arrives at the Ōoku, the secluded women's quarters of Edo Castle, to exorcise malevolent Mononoke.",
+      trailer: "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1"
+    },
+    {
+      id: "black-clover-movie",
+      title: "Black Clover: Sword of the Wizard King",
+      // 👇 LINE 198: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 200: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      rating: "8.6",
+      year: "2023",
+      genres: "Action, Magic, Shounen",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "MOVIE",
+      top10: 10,
+      description: "Asta and the Magic Knights face former Wizard Kings resurrected by Conrad Leto using the Imperial Sword.",
+      trailer: "https://www.youtube.com/embed/pkZXflZlqK4?autoplay=1"
+    },
+    {
+      id: "your-name",
+      title: "Your Name. (Kimi no Na wa)",
+      // 👇 LINE 216: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 218: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.3",
+      year: "2016",
+      genres: "Romance, Drama, Supernatural",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "MOVIE",
+      description: "Two teenagers share a profound, magical connection upon discovering they are swapping bodies across time and space.",
+      trailer: "https://www.youtube.com/embed/xU47nhruN-Q?autoplay=1"
+    },
+    {
+      id: "spirited-away",
+      title: "Spirited Away",
+      // 👇 LINE 234: POSTER IMAGE URL (Vertical 2:3)
+      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      // 👇 LINE 236: BACKDROP BANNER URL (Landscape 16:9)
+      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1280&auto=format&fit=crop&q=80",
+      rating: "9.1",
+      year: "2001",
+      genres: "Adventure, Supernatural, Classic",
+      language: "Hindi Dubbed",
+      status: "finished",
+      totalEp: "MOVIE",
+      description: "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
+      trailer: "https://www.youtube.com/embed/ByXuk9QqQkk?autoplay=1"
+    }
+  ];
+
   // ═══ GLOBAL UTILITIES & SAFE STORAGE HELPERS ═══
-  const STORAGE_KEYS = {
+  var STORAGE_KEYS = {
     FAV: "kyami_anime_favorites",
     HISTORY: "toonflix_history",
     USER: "kyami_anime_user",
@@ -17,7 +241,6 @@
     TG_POPUP: "kyami_tg_popup_timestamp"
   };
 
-  // Resilient User/Fav/Theme Subsystems (Never throw ReferenceError)
   window.ToonFav = window.ToonFav || {
     get: function() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FAV) || "[]"); }
@@ -50,38 +273,8 @@
     }
   };
 
-  window.ToonRating = window.ToonRating || {
-    get: function(id) {
-      try {
-        var r = JSON.parse(localStorage.getItem(STORAGE_KEYS.RATINGS) || "{}");
-        return r[id] || 0;
-      } catch (e) { return 0; }
-    },
-    set: function(id, val) {
-      try {
-        var r = JSON.parse(localStorage.getItem(STORAGE_KEYS.RATINGS) || "{}");
-        r[id] = val;
-        localStorage.setItem(STORAGE_KEYS.RATINGS, JSON.stringify(r));
-      } catch (e) {}
-    }
-  };
-
-  window.ToonUser = window.ToonUser || {
-    get: function() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER) || "null"); }
-      catch (e) { return null; }
-    },
-    set: function(name, email) {
-      var u = { name: name || "Anime Fan", email: email || "" };
-      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(u));
-      return u;
-    }
-  };
-
   window.ToonTheme = window.ToonTheme || {
-    get: function() {
-      return localStorage.getItem(STORAGE_KEYS.THEME) || "dark";
-    },
+    get: function() { return localStorage.getItem(STORAGE_KEYS.THEME) || "dark"; },
     toggle: function() {
       var cur = this.get();
       var next = cur === "dark" ? "light" : "dark";
@@ -92,9 +285,7 @@
   };
 
   window.ToonLang = window.ToonLang || {
-    get: function() {
-      return localStorage.getItem(STORAGE_KEYS.LANG) || "hi";
-    },
+    get: function() { return localStorage.getItem(STORAGE_KEYS.LANG) || "hi"; },
     toggle: function() {
       var cur = this.get();
       var next = cur === "hi" ? "en" : "hi";
@@ -103,198 +294,6 @@
       return next;
     }
   };
-
-  // ═══ HIGH-FIDELITY CURATED DEFAULT DATA (ZERO BROKEN PAGES) ═══
-  var CURATED_FALLBACK_ANIME = [
-    {
-      id: "solo-leveling",
-      title: "Solo Leveling (Season 2)",
-      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.2",
-      year: "2024",
-      genres: "Action, Fantasy, Adventure",
-      language: "Hindi Dubbed",
-      status: "ongoing",
-      totalEp: "Ep: 12",
-      top10: 1,
-      description: "In a world where hunters must battle deadly monsters to protect mankind, Sung Jinwoo, notoriously known as the weakest hunter of all mankind, is fatally injured in a high-rank double dungeon.",
-      trailer: "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1",
-      seasons: {
-        "Season_1": {
-          "ep_1": { number: 1, title: "I'm Used to It", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" },
-          "ep_2": { number: 2, title: "If I Had One More Chance", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" },
-          "ep_3": { number: 3, title: "It's Like a Game", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" }
-        },
-        "Season_2": {
-          "ep_1": { number: 1, title: "Arise from the Shadows", streaming: "https://www.youtube.com/embed/916wT5h6rZc", telegram: "https://t.me/Anime_hindizone" }
-        }
-      }
-    },
-    {
-      id: "demon-slayer-hashira",
-      title: "Demon Slayer: Hashira Training",
-      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.0",
-      year: "2024",
-      genres: "Action, Supernatural, Historical",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "Ep: 08",
-      top10: 2,
-      description: "Tanjiro visits the Stone Hashira, Himejima, who intends to prepare him for the battles to come in the ultimate Infinity Castle showdown.",
-      trailer: "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1"
-    },
-    {
-      id: "classroom-of-elite-3",
-      title: "Classroom of the Elite Season 3",
-      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1563089145-599997674d42?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.7",
-      year: "2024",
-      genres: "Drama, Psychological, Mystery",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "Ep: 13",
-      top10: 3,
-      description: "Kiyotaka Ayanokoji continues his calculated maneuverings in the Tokyo Metropolitan Advanced Nurturing High School during the mixed training camp exam.",
-      trailer: "https://www.youtube.com/embed/a6R_p6vP_Y8?autoplay=1"
-    },
-    {
-      id: "jujutsu-kaisen-s2",
-      title: "Jujutsu Kaisen: Shibuya Incident",
-      poster: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.4",
-      year: "2023",
-      genres: "Action, Dark Fantasy, Supernatural",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "Ep: 23",
-      top10: 4,
-      description: "On October 31st, a veil descends upon Shibuya. Satoru Gojo is lured into a trap orchestrated by Suguru Geto and cursed spirits.",
-      trailer: "https://www.youtube.com/embed/pkZXflZlqK4?autoplay=1"
-    },
-    {
-      id: "mushoku-tensei-s2",
-      title: "Mushoku Tensei: Jobless Reincarnation S2",
-      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.8",
-      year: "2024",
-      genres: "Adventure, Fantasy, Isekai",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "Ep: 24",
-      top10: 5,
-      description: "Rudeus Greyrat enters Ranoa Magic Academy looking for clues regarding the Teleportation Incident and his lost mother Zenith.",
-      trailer: "https://www.youtube.com/embed/5aGZc6YJ4xY?autoplay=1"
-    },
-    {
-      id: "one-piece-egghead",
-      title: "One Piece: Egghead Island Arc",
-      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.5",
-      year: "2024",
-      genres: "Action, Adventure, Shounen",
-      language: "Hindi Subbed",
-      status: "ongoing",
-      totalEp: "Ep: Ongoing",
-      top10: 6,
-      description: "The Straw Hat Pirates arrive at Egghead, the Island of the Future, where Dr. Vegapunk's laboratory holds secrets about the Void Century.",
-      trailer: "https://www.youtube.com/embed/MCb13lbKpsk?autoplay=1"
-    },
-    {
-      id: "the-ribbon-hero",
-      title: "The Ribbon Hero: Dawn of Swords",
-      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.4",
-      year: "2024",
-      genres: "Action, Fantasy, Comedy",
-      language: "Hindi Dubbed",
-      status: "ongoing",
-      totalEp: "Ep: 10",
-      top10: 7,
-      description: "Armed with an ancient enchanted ribbon, a novice rogue embarks on a quest across the fractured continent.",
-      trailer: "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1"
-    },
-    {
-      id: "the-ramparts-of-ice",
-      title: "The Ramparts of Ice Season 2",
-      poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.2",
-      year: "2024",
-      genres: "Comedy, Romance, School",
-      language: "Hindi Dubbed",
-      status: "ongoing",
-      totalEp: "Ep: 06",
-      top10: 8,
-      description: "High school friendships grow warmer in the harsh winter as misunderstood loner Koyuki discovers true empathy.",
-      trailer: "https://www.youtube.com/embed/a6R_p6vP_Y8?autoplay=1"
-    },
-    {
-      id: "mononoke-phantom-rain",
-      title: "Mononoke The Movie: Phantom in the Rain",
-      poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.9",
-      year: "2024",
-      genres: "Fantasy, Mystery, Supernatural",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "MOVIE",
-      top10: 9,
-      description: "The Medicine Seller arrives at the Ōoku, the secluded women's quarters of Edo Castle, to exorcise malevolent Mononoke.",
-      trailer: "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1"
-    },
-    {
-      id: "black-clover-movie",
-      title: "Black Clover: Sword of the Wizard King",
-      poster: "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80",
-      rating: "8.6",
-      year: "2023",
-      genres: "Action, Magic, Shounen",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "MOVIE",
-      top10: 10,
-      description: "Asta and the Magic Knights face former Wizard Kings resurrected by Conrad Leto using the Imperial Sword.",
-      trailer: "https://www.youtube.com/embed/pkZXflZlqK4?autoplay=1"
-    },
-    {
-      id: "your-name",
-      title: "Your Name. (Kimi no Na wa)",
-      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.3",
-      year: "2016",
-      genres: "Romance, Drama, Supernatural",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "MOVIE",
-      description: "Two teenagers share a profound, magical connection upon discovering they are swapping bodies across time and space.",
-      trailer: "https://www.youtube.com/embed/xU47nhruN-Q?autoplay=1"
-    },
-    {
-      id: "spirited-away",
-      title: "Spirited Away",
-      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-      banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&auto=format&fit=crop&q=80",
-      rating: "9.1",
-      year: "2001",
-      genres: "Adventure, Supernatural, Classic",
-      language: "Hindi Dubbed",
-      status: "finished",
-      totalEp: "MOVIE",
-      description: "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
-      trailer: "https://www.youtube.com/embed/ByXuk9QqQkk?autoplay=1"
-    }
-  ];
 
   // ═══ STATE ENGINE ═══
   var state = {
@@ -349,7 +348,6 @@
           var liveList = Object.entries(val).map(function(pair) {
             return Object.assign({ id: pair[0] }, pair[1]);
           });
-          // Merge with fallback to ensure highest quality metadata
           var mergedMap = new Map();
           CURATED_FALLBACK_ANIME.forEach(function(item) { mergedMap.set(item.id, item); });
           liveList.forEach(function(item) { mergedMap.set(item.id, Object.assign({}, mergedMap.get(item.id) || {}, item)); });
@@ -358,11 +356,11 @@
         }
       });
     } catch (err) {
-      console.warn("Firebase sync running with offline high-performance fallback:", err);
+      console.warn("Firebase sync running with offline fallback:", err);
     }
   }
 
-  // ═══ ANIREAL BENCHMARK CARD BUILDER (ZERO-JANK) ═══
+  // ═══ ANIME CARD BUILDER (ZERO-JANK) ═══
   function buildAnimeCardHTML(anime, rank) {
     var isOngoing = anime.status === "ongoing" || (anime.totalEp && anime.totalEp.toLowerCase().includes("ongoing"));
     var statusClass = isOngoing ? "ongoing" : "finished";
@@ -398,7 +396,7 @@
     );
   }
 
-  // ═══ HERO CAROUSEL CONTROLLER (AniReal Benchmark) ═══
+  // ═══ HERO CAROUSEL CONTROLLER (ANIMATED BLURRED BACKDROP) ═══
   function updateHeroSlide(index) {
     if (!state.animeList.length) return;
     var heroList = state.animeList.slice(0, 5);
@@ -414,8 +412,27 @@
     var playBtn = document.getElementById("heroPlayAction");
     var dotsContainer = document.getElementById("heroIndicatorDots");
 
-    if (bgImg) bgImg.src = item.banner || item.poster;
-    if (spotlightImg) spotlightImg.src = item.poster;
+    // Smooth Backdrop Image Swap with Ambient Fade
+    if (bgImg) {
+      var nextBanner = item.banner || item.poster;
+      if (bgImg.src !== nextBanner) {
+        bgImg.style.opacity = "0.35";
+        var preloader = new Image();
+        preloader.onload = function() {
+          bgImg.src = nextBanner;
+          bgImg.style.opacity = "0.9";
+        };
+        preloader.onerror = function() {
+          bgImg.src = item.poster;
+          bgImg.style.opacity = "0.9";
+        };
+        preloader.src = nextBanner;
+      }
+    }
+
+    if (spotlightImg) {
+      spotlightImg.src = item.poster;
+    }
     if (spotlightEp) spotlightEp.textContent = item.totalEp || "Total Ep: 12";
     if (spotlightCard) spotlightCard.dataset.animeId = item.id;
     if (titleEl) titleEl.textContent = item.title;
@@ -453,7 +470,7 @@
     renderTopMovies();
     renderGenreChips();
     renderLanguageChips();
-    renderPaginatedGrid();
+    renderBrowseGridIfPresent();
   }
 
   function renderHeroSection() {
@@ -541,22 +558,18 @@
     }).join("");
   }
 
-  // ═══ FILTERED & PAGINATED ALL ANIME GRID ═══
+  // ═══ FILTER & PAGINATE BROWSE PAGE (ANIME.HTML) ═══
   function getFilteredAnime() {
     return state.animeList.filter(function(a) {
-      // Genre filter
       if (state.activeGenre !== "All") {
         if (!(a.genres || "").toLowerCase().includes(state.activeGenre.toLowerCase())) return false;
       }
-      // Language filter
       if (state.activeLanguage !== "All") {
         if (!(a.language || "Hindi").toLowerCase().includes(state.activeLanguage.toLowerCase())) return false;
       }
-      // Year filter
       if (state.filterYear !== "All") {
         if (String(a.year || "") !== state.filterYear) return false;
       }
-      // Rating filter
       if (state.filterRating !== "All") {
         if (parseFloat(a.rating || 0) < parseFloat(state.filterRating)) return false;
       }
@@ -564,12 +577,15 @@
     });
   }
 
-  function renderPaginatedGrid() {
-    var grid = document.getElementById("allAnimeMainGrid");
+  function renderBrowseGridIfPresent() {
+    var grid = document.getElementById("allAnimeMainGrid") || document.getElementById("browseAnimeGrid");
     var pagination = document.getElementById("animePagination");
+    var countPill = document.getElementById("browseTotalCount");
     if (!grid) return;
 
     var filtered = getFilteredAnime();
+    if (countPill) countPill.textContent = filtered.length + " Animes Available";
+
     var totalPages = Math.ceil(filtered.length / state.pageSize) || 1;
     if (state.currentPage > totalPages) state.currentPage = 1;
 
@@ -578,8 +594,8 @@
 
     if (!pageItems.length) {
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--text-muted);">' +
-        '<p style="font-size:1.1rem;font-weight:700;">Koi anime nahi mila</p>' +
-        '<p style="font-size:0.85rem;margin-top:6px;">Try clearing filters or search for another title.</p>' +
+        '<p style="font-size:1.15rem;font-weight:700;color:#fff;">Koi anime nahi mila</p>' +
+        '<p style="font-size:0.85rem;margin-top:6px;">Filters change karein ya search bar me naya naam daalein.</p>' +
       '</div>';
     } else {
       grid.innerHTML = pageItems.map(function(item) {
@@ -662,11 +678,10 @@
     var tags = document.getElementById("modalTagsContainer");
     var seasonStrip = document.getElementById("modalSeasonStrip");
     var epGrid = document.getElementById("modalEpisodesGrid");
-    var tgBtn = document.getElementById("modalTgBtn");
 
     if (title) title.textContent = anime.title || "Anime Player";
     if (poster) poster.src = anime.poster || "";
-    if (desc) desc.textContent = anime.description || "Enjoy streaming in high-definition Hindi Dubbed audio on Kyami Animes India.";
+    if (desc) desc.textContent = anime.description || "Enjoy high-definition Hindi Dubbed audio on Kyami Animes India.";
     if (iframe) iframe.src = anime.trailer || "https://www.youtube.com/embed/916wT5h6rZc?autoplay=1";
 
     if (tags) {
@@ -678,7 +693,6 @@
       ].join("");
     }
 
-    // Handle Seasons & Episodes
     var seasons = anime.seasons || {
       "Season_1": {
         "ep_1": { number: 1, title: "Episode 1" },
@@ -699,7 +713,6 @@
 
     renderModalEpisodes(seasons[state.activeSeasonKey]);
 
-    // Save to Continue Watching History
     try {
       var hist = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY) || "[]");
       hist = hist.filter(function(h) { return h.id !== anime.id; });
@@ -752,7 +765,7 @@
   // ═══ SOCIAL SHARE ENGINE ═══
   window.sharePlatform = function(platform) {
     var title = encodeURIComponent("Watch anime in Hindi Dubbed on Kyami Animes India! 🔥");
-    var url = encodeURIComponent(window.location.href);
+    var url = encodeURIComponent(window.location.origin + window.location.pathname);
 
     switch(platform) {
       case "whatsapp":
@@ -870,7 +883,7 @@
         state.currentPage = 1;
         document.querySelectorAll("[data-genre-chip]").forEach(function(c) { c.classList.remove("active"); });
         genreChip.classList.add("active");
-        renderPaginatedGrid();
+        renderBrowseGridIfPresent();
         return;
       }
 
@@ -881,7 +894,7 @@
         state.currentPage = 1;
         document.querySelectorAll("[data-lang-chip]").forEach(function(c) { c.classList.remove("active"); });
         langChip.classList.add("active");
-        renderPaginatedGrid();
+        renderBrowseGridIfPresent();
         return;
       }
 
@@ -889,9 +902,8 @@
       var pageNumBtn = e.target.closest("[data-page-num]");
       if (pageNumBtn) {
         state.currentPage = parseInt(pageNumBtn.dataset.pageNum, 10);
-        renderPaginatedGrid();
-        var allSec = document.getElementById("allAnimeShelf");
-        if (allSec) allSec.scrollIntoView({ behavior: "smooth", block: "start" });
+        renderBrowseGridIfPresent();
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
@@ -904,9 +916,8 @@
         } else if (pageNavBtn.dataset.pageNav === "next" && state.currentPage < totalPages) {
           state.currentPage++;
         }
-        renderPaginatedGrid();
-        var allSec2 = document.getElementById("allAnimeShelf");
-        if (allSec2) allSec2.scrollIntoView({ behavior: "smooth", block: "start" });
+        renderBrowseGridIfPresent();
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
@@ -993,7 +1004,7 @@
         state.filterYear = document.getElementById("filterYearSelect").value;
         state.filterRating = document.getElementById("filterRatingSelect").value;
         state.currentPage = 1;
-        renderPaginatedGrid();
+        renderBrowseGridIfPresent();
         window.showToast("✅ Filters Applied");
         if (filterBody) filterBody.classList.remove("open");
       });
@@ -1011,13 +1022,13 @@
         state.currentPage = 1;
         renderGenreChips();
         renderLanguageChips();
-        renderPaginatedGrid();
+        renderBrowseGridIfPresent();
         window.showToast("🔄 Filters Reset");
         if (filterBody) filterBody.classList.remove("open");
       });
     }
 
-    // Scroll Header Tint Effect
+    // Header Tint on Scroll
     window.addEventListener("scroll", function() {
       var header = document.querySelector(".top-header");
       if (header) {
