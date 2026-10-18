@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Kyami Animes India - Premium Hindi Anime Streaming</title>
-  <meta name="description" content="Watch high-definition anime streaming in Hindi Dubbed & Subbed. Featuring ultra-smooth 60fps animations, dark glassmorphic design, and instant downloads.">
+  <meta name="description" content="Watch high-definition anime streaming in Hindi Dubbed & Subbed. Ultra-smooth 60fps animations, dark glassmorphic design, and instant downloads.">
   <meta property="og:title" content="Kyami Animes India - Premium Hindi Anime Streaming">
   <meta property="og:description" content="Watch high-definition anime streaming in Hindi Dubbed & Subbed. Ultra-smooth 60fps performance and instant streaming.">
   <meta property="og:type" content="website">
@@ -22,7 +22,7 @@
   <!-- ═══ TOP STICKY APP BAR ═══ -->
   <header class="top-header gpu-layer">
     <div class="header-left">
-      <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open Navigation Menu">
+      <button class="menu-toggle-btn" id="menuToggleBtn" onclick="window.location.href='anime.html'" aria-label="Open Navigation Menu">
         <span></span>
         <span></span>
         <span></span>
@@ -37,7 +37,7 @@
     <div class="header-right">
       <button class="header-icon-action" onclick="window.ToonTheme && window.ToonTheme.toggle()" id="themeBtn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
       <button class="header-icon-action" onclick="window.ToonLang && window.ToonLang.toggle()" title="Toggle Language" aria-label="Toggle Language">🌐</button>
-      <a href="#allAnimeShelf" class="header-icon-action" title="Browse Library" aria-label="Browse Library">🎬</a>
+      <a href="anime.html" class="header-icon-action" title="Browse Library" aria-label="Browse Library">🎬</a>
       <a href="login.html" class="admin-header-btn">Admin</a>
     </div>
   </header>
@@ -107,16 +107,16 @@
       </div>
     </div>
     <div class="filter-actions-group">
-      <button class="filter-btn-apply" id="applyFilterBtn">Apply Filters</button>
+      <button class="filter-btn-apply" id="applyFilterBtn" onclick="window.location.href='anime.html'">Apply Filters</button>
       <button class="filter-btn-reset" id="resetFilterBtn">Reset</button>
     </div>
   </div>
 
-  <!-- ═══ ANIREAL BENCHMARK HERO SECTION ═══ -->
+  <!-- ═══ ANIREAL BENCHMARK HERO SECTION (ANIMATED BLURRED BACKDROP) ═══ -->
   <section class="hero-benchmark gpu-layer" id="heroBenchmarkSection">
     <!-- Blurred Cinematic Backdrop -->
     <div class="hero-backdrop-layer">
-      <img id="heroBackdropImg" class="hero-backdrop-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80" alt="Backdrop">
+      <img id="heroBackdropImg" class="hero-backdrop-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1280&auto=format&fit=crop&q=80" alt="Anime Backdrop Banner">
       <div class="hero-backdrop-vignette"></div>
     </div>
 
@@ -125,15 +125,15 @@
       <div class="hero-spotlight-top">
         <div class="hero-pill-badge">🔥 FEATURED SPOTLIGHT</div>
         <div class="hero-floating-card" id="heroSpotlightCard">
-          <img id="heroSpotlightImg" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80" alt="Spotlight Poster">
-          <div class="hero-floating-ep" id="heroSpotlightEp">Total Ep: 12</div>
+          <img id="heroSpotlightImg" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80" alt="Spotlight Poster">
+          <div class="hero-floating-ep" id="heroSpotlightEp">Total Ep: 08</div>
         </div>
       </div>
 
       <div class="hero-title-area">
-        <h1 class="hero-title" id="heroAnimeTitle">Solo Leveling (Season 2)</h1>
+        <h1 class="hero-title" id="heroAnimeTitle">Demon Slayer: Hashira Training Arc</h1>
         <div class="hero-meta-genres" id="heroAnimeGenres">
-          <span>Action</span> • <span>Fantasy</span> • <span>Adventure</span>
+          <span>Action</span> • <span>Supernatural</span> • <span>Historical</span>
         </div>
 
         <div class="hero-actions-row">
@@ -148,7 +148,7 @@
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            + My List
+            My List
           </button>
         </div>
       </div>
@@ -208,7 +208,7 @@
         <span class="shelf-icon">⚡</span>
         <h2 class="shelf-title">New Releases</h2>
       </div>
-      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+      <a href="anime.html" class="shelf-see-all">SEE ALL &gt;</a>
     </div>
     <div class="shelf-horizontal-scroll" id="newReleasesGrid"></div>
   </section>
@@ -220,7 +220,7 @@
         <span class="shelf-icon">🔥</span>
         <h2 class="shelf-title">Top Hits</h2>
       </div>
-      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+      <a href="anime.html" class="shelf-see-all">SEE ALL &gt;</a>
     </div>
     <div class="shelf-horizontal-scroll" id="topHitsGrid"></div>
   </section>
@@ -232,7 +232,7 @@
         <span class="shelf-icon">⭐</span>
         <h2 class="shelf-title">Popular</h2>
       </div>
-      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+      <a href="anime.html" class="shelf-see-all">SEE ALL &gt;</a>
     </div>
     <div class="shelf-horizontal-scroll" id="popularGrid"></div>
   </section>
@@ -244,35 +244,20 @@
         <span class="shelf-icon">🎬</span>
         <h2 class="shelf-title">Top Movies</h2>
       </div>
-      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+      <a href="anime.html" class="shelf-see-all">SEE ALL &gt;</a>
     </div>
     <div class="shelf-horizontal-scroll" id="topMoviesGrid"></div>
   </section>
 
-  <!-- ═══ VIEW ALL ANIMES CTA ═══ -->
+  <!-- ═══ VIEW ALL ANIMES CTA (TERMINAL SECTION OF HOMEPAGE) ═══ -->
   <div class="view-all-center-box">
-    <a href="#allAnimeShelf" class="btn-view-all-animes">View All Animes</a>
+    <a href="anime.html" class="btn-view-all-animes">
+      <span>View All Animes</span>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
   </div>
-
-  <!-- ═══ ALL ANIME SECTION (AniReal Language Tabs & Grid) ═══ -->
-  <section class="anime-shelf-section" id="allAnimeShelf">
-    <div class="shelf-header">
-      <div class="shelf-title-wrap">
-        <span class="shelf-icon">🌌</span>
-        <h2 class="shelf-title">Browse All Anime</h2>
-      </div>
-    </div>
-
-    <!-- Language Filter Tabs -->
-    <div class="filter-chips-wrapper" style="padding-bottom: 12px;">
-      <div class="filter-chips-scroll" id="languageChipsScroll"></div>
-    </div>
-
-    <div class="all-anime-container">
-      <div class="all-cards-grid" id="allAnimeMainGrid"></div>
-      <div class="pagination-controls" id="animePagination"></div>
-    </div>
-  </section>
 
   <!-- ═══ INTERACTIVE WATCH & DETAIL MODAL ═══ -->
   <div class="anime-modal-backdrop" id="animeModalBackdrop">
@@ -357,10 +342,10 @@
         <div class="footer-col">
           <h4>QUICK LINKS</h4>
           <ul>
-            <li><a href="#newReleasesGrid">Movies</a></li>
-            <li><a href="#topHitsGrid">Series</a></li>
-            <li><a href="#genreChipsScroll">Genres</a></li>
-            <li><a href="#allAnimeShelf">Browse All</a></li>
+            <li><a href="anime.html">Movies</a></li>
+            <li><a href="anime.html">Series</a></li>
+            <li><a href="anime.html">Genres</a></li>
+            <li><a href="anime.html">Browse All</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -389,7 +374,7 @@
       <span>Home</span>
     </a>
 
-    <a href="#genreChipsScroll" class="dock-item">
+    <a href="anime.html" class="dock-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="7" height="7"></rect>
         <rect x="14" y="3" width="7" height="7"></rect>
