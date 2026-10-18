@@ -1,455 +1,423 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Kyami Animes India - Premium Anime Streaming</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kyami Animes India - Premium Hindi Anime Streaming</title>
+  <meta name="description" content="Watch high-definition anime streaming in Hindi Dubbed & Subbed. Featuring ultra-smooth 60fps animations, dark glassmorphic design, and instant downloads.">
+  <meta property="og:title" content="Kyami Animes India - Premium Hindi Anime Streaming">
+  <meta property="og:description" content="Watch high-definition anime streaming in Hindi Dubbed & Subbed. Ultra-smooth 60fps performance and instant streaming.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#060813">
+
+  <!-- Preconnect Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
-<header class="top-header">
-  <a href="index.html" class="logo">
-    <span class="logo-icon">🔥</span>
-    <span class="logo-text">Kyami<span>Animes</span>India</span>
-    <span class="logo-badge">HINDI</span>
-  </a>
-  <div class="header-extras">
-    <button class="header-icon-btn" onclick="toggleTheme()" id="themeBtn" title="Theme">🌙</button>
-    <button class="header-icon-btn" onclick="toggleLang()" title="Language">🌐</button>
-    <a href="profile.html" class="header-icon-btn" title="Profile">👤</a>
-    <a href="login.html" class="admin-btn">Admin</a>
-  </div>
-</header>
-
-<!-- ═══ SEARCH ═══ -->
-<div class="search-wrap" id="searchWrap">
-  <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-  </svg>
-  <input type="text" id="searchInput" placeholder="Anime, movie, genre search karein...">
-  <button id="searchBtn">GO</button>
-</div>
-
-<!-- ═══ SEARCH RESULTS BOX ═══ -->
-<div class="search-results-box" id="searchResultsBox" style="display:none;">
-  <div class="search-results-header">
-    <span id="searchResultsTitle">Search Results</span>
-    <button onclick="closeSearchResults()" class="search-close-btn">✕</button>
-  </div>
-  <div class="search-results-grid" id="searchResultsGrid"></div>
-</div>
-
-<!-- ═══ ADVANCED FILTER ═══ -->
-<div style="text-align:center;">
-  <button class="filter-panel-btn" onclick="toggleFilterPanel()">🔍 Advanced Filter</button>
-</div>
-
-<div class="filter-panel" id="filterPanel">
-  <div class="filter-row">
-    <div><label>📅 Year</label><select id="filterYear"><option value="All">All Years</option></select></div>
-    <div><label>⭐ Min Rating</label><select id="filterRating">
-      <option value="All">Any</option><option value="6">6+</option><option value="7">7+</option>
-      <option value="8">8+</option><option value="9">9+</option>
-    </select></div>
-    <div><label>🎬 Format</label><select id="filterFormat">
-      <option value="All">All</option><option value="TV">TV Series</option><option value="MOVIE">Movie</option>
-      <option value="OVA">OVA</option><option value="ONA">ONA</option><option value="SPECIAL">Special</option>
-    </select></div>
-  </div>
-  <div class="filter-actions">
-    <button class="apply" onclick="applyAdvancedFilter()">✅ Apply Filter</button>
-    <button class="reset" onclick="resetAdvancedFilter()">🔄 Reset</button>
-  </div>
-</div>
-
-<!-- ═══ HERO BANNER ═══ -->
-<section class="hero-section" id="heroSection">
-  <div class="hero-slider" id="heroSlider"></div>
-</section>
-
-<!-- ═══ GENRE CHIPS ═══ -->
-<section class="chips-section">
-  <div class="chips-scroll" id="genreBtns"></div>
-</section>
-
-<!-- ═══ CONTINUE WATCHING ═══ -->
-<section class="row-section" id="continueWatchingSection" style="display:none;">
-  <div class="row-header">
-    <div class="row-title-wrap">
-      <span class="row-dot" style="background:#22d3ee;"></span>
-      <h2 data-i18n="continue_watching">Continue Watching</h2>
+  <!-- ═══ TOP STICKY APP BAR ═══ -->
+  <header class="top-header gpu-layer">
+    <div class="header-left">
+      <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">🔥</div>
+        <div class="brand-text">Kyami<span class="highlight">Animes</span>India</div>
+        <span class="brand-badge">HINDI DUB</span>
+      </a>
     </div>
-    <button onclick="clearHistory()" class="see-all" data-i18n="clear">Clear</button>
-  </div>
-  <div class="row-scroll" id="continueWatching"></div>
-</section>
 
-<!-- ═══ NEWLY UPDATED ═══ -->
-<section class="row-section">
-  <div class="row-header">
-    <div class="row-title-wrap">
-      <span class="row-dot" style="background:#06b6d4;"></span>
-      <h2 data-i18n="newly_updated">Newly Updated</h2>
+    <div class="header-right">
+      <button class="header-icon-action" onclick="window.ToonTheme && window.ToonTheme.toggle()" id="themeBtn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
+      <button class="header-icon-action" onclick="window.ToonLang && window.ToonLang.toggle()" title="Toggle Language" aria-label="Toggle Language">🌐</button>
+      <a href="#allAnimeShelf" class="header-icon-action" title="Browse Library" aria-label="Browse Library">🎬</a>
+      <a href="login.html" class="admin-header-btn">Admin</a>
     </div>
-    <a href="#all" class="see-all" data-i18n="see_all">See All →</a>
-  </div>
-  <div class="row-scroll" id="newlyUpdated"></div>
-</section>
+  </header>
 
-<!-- ═══ TOP 10 ═══ -->
-<section class="row-section">
-  <div class="row-header">
-    <div class="row-title-wrap">
-      <span class="row-dot" style="background:#fbbf24;"></span>
-      <h2 data-i18n="top_10">Top 10 This Week</h2>
+  <!-- ═══ SEARCH BAR WITH INSTANT RESULTS OVERLAY ═══ -->
+  <div class="search-container" id="searchContainer">
+    <div class="search-glass-bar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Anime, movie, genre search karein..." autocomplete="off">
+      <button class="search-submit-btn" id="searchGoBtn">SEARCH</button>
+    </div>
+
+    <!-- Live Search Overlay -->
+    <div class="search-results-overlay" id="searchResultsOverlay" style="display: none;">
+      <div class="search-results-top">
+        <span id="searchResultsHeading">Search Results</span>
+        <button class="search-close-x" onclick="document.getElementById('searchResultsOverlay').style.display='none'" aria-label="Close Search">✕</button>
+      </div>
+      <div class="search-cards-grid" id="searchCardsGrid"></div>
     </div>
   </div>
-  <div class="row-scroll" id="top10Grid"></div>
-</section>
 
-<!-- ═══ ALL ANIME ═══ -->
-<section class="row-section" id="all">
-  <div class="row-header">
-    <div class="row-title-wrap">
-      <span class="row-dot" style="background:#3b82f6;"></span>
-      <h2 data-i18n="all_anime">All Anime</h2>
-    </div>
-  </div>
-  <div class="cards-grid" id="allAnime"></div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="premium-footer">
-  <div class="footer-logo">🔥 Kyami<span>Animes</span>India</div>
-  <p>Premium Anime Streaming • Made with ❤️ in India</p>
-  <div class="footer-links">
-    <a href="index.html" data-i18n="home">Home</a>
-    <a href="#all" data-i18n="all_anime">All Anime</a>
-    <a href="profile.html" data-i18n="profile">Profile</a>
-    <a href="login.html" data-i18n="admin">Admin</a>
-  </div>
-  <p class="footer-copy">© 2026 Kyami Animes India — All Rights Reserved</p>
-</footer>
-
-<!-- ═══ BOTTOM NAV ═══ -->
-<nav class="bottom-nav">
-  <a href="index.html" class="active">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>
-    </svg>
-    <small data-i18n="home">Home</small>
-  </a>
-  <a href="javascript:focusSearch()">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    <small data-i18n="search">Search</small>
-  </a>
-  <a href="javascript:scrollToGenres()">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-      <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-    </svg>
-    <small data-i18n="genres">Genres</small>
-  </a>
-  <a href="profile.html">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-    </svg>
-    <small data-i18n="profile">Profile</small>
-  </a>
-</nav>
-
-<!-- ═══ HEADER HELPERS ═══ -->
-<script>
-function focusSearch() {
-  document.getElementById("searchInput").focus();
-  document.getElementById("searchWrap").scrollIntoView({behavior:"smooth", block:"center"});
-}
-function scrollToGenres() {
-  document.getElementById("genreBtns").scrollIntoView({behavior:"smooth", block:"center"});
-}
-function clearHistory() {
-  if (!confirm("Watch history clear karein?")) return;
-  localStorage.removeItem("toonflix_history");
-  location.reload();
-}
-function toggleTheme() {
-  if (typeof ToonTheme === "undefined") return;
-  const t = ToonTheme.toggle();
-  document.getElementById("themeBtn").textContent = t === "dark" ? "🌙" : "☀️";
-  if (typeof showToast === "function") showToast(t === "dark" ? "🌙 Dark mode" : "☀️ Light mode");
-}
-function toggleLang() {
-  if (typeof ToonLang === "undefined") return;
-  ToonLang.toggle();
-}
-document.addEventListener("DOMContentLoaded", function() {
-  if (typeof ToonTheme !== "undefined") {
-    const btn = document.getElementById("themeBtn");
-    if (btn) btn.textContent = ToonTheme.get() === "dark" ? "🌙" : "☀️";
-  }
-});
-</script>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- TELEGRAM JOIN POPUP — Kyami Animes India -->
-<!-- ═══════════════════════════════════════════ -->
-<div class="tg-popup-overlay" id="tgPopupOverlay">
-  <div class="tg-popup">
-    <button class="tg-popup-close" onclick="closeTgPopup()" aria-label="Close">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
+  <!-- ═══ ADVANCED FILTER ACCORDION ═══ -->
+  <div class="filter-dropdown-bar">
+    <button class="filter-dropdown-trigger" id="filterAccordionTrigger">
+      <span>⚡ Advanced Filter</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="m6 9 6 6 6-6"/>
       </svg>
     </button>
+  </div>
 
-    <div class="tg-popup-header">
-      <div class="tg-popup-icon">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="#ffffff">
-          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.26-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-        </svg>
+  <div class="filter-accordion-body" id="filterAccordionBody">
+    <div class="filter-grid-fields">
+      <div class="filter-field">
+        <label>📅 Release Year</label>
+        <select id="filterYearSelect">
+          <option value="All">All Years</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="Classic">Classic (< 2020)</option>
+        </select>
       </div>
-      <div class="tg-popup-header-text">
-        <h3>Kyami Animes India</h3>
-        <p class="tg-popup-subtitle">Official Channel</p>
+      <div class="filter-field">
+        <label>⭐ Minimum Rating</label>
+        <select id="filterRatingSelect">
+          <option value="All">Any Rating</option>
+          <option value="9">⭐ 9.0+ (Masterpiece)</option>
+          <option value="8.5">⭐ 8.5+ (Outstanding)</option>
+          <option value="8">⭐ 8.0+ (Great)</option>
+          <option value="7">⭐ 7.0+ (Good)</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>🎬 Format</label>
+        <select id="filterFormatSelect">
+          <option value="All">All Formats</option>
+          <option value="TV">TV Series</option>
+          <option value="MOVIE">Movie</option>
+          <option value="OVA">OVA / Special</option>
+        </select>
+      </div>
+    </div>
+    <div class="filter-actions-group">
+      <button class="filter-btn-apply" id="applyFilterBtn">Apply Filters</button>
+      <button class="filter-btn-reset" id="resetFilterBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- ═══ ANIREAL BENCHMARK HERO SECTION ═══ -->
+  <section class="hero-benchmark gpu-layer" id="heroBenchmarkSection">
+    <!-- Blurred Cinematic Backdrop -->
+    <div class="hero-backdrop-layer">
+      <img id="heroBackdropImg" class="hero-backdrop-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80" alt="Backdrop">
+      <div class="hero-backdrop-vignette"></div>
+    </div>
+
+    <!-- Spotlight Content -->
+    <div class="hero-content-wrap">
+      <div class="hero-spotlight-top">
+        <div class="hero-pill-badge">🔥 FEATURED SPOTLIGHT</div>
+        <div class="hero-floating-card" id="heroSpotlightCard">
+          <img id="heroSpotlightImg" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80" alt="Spotlight Poster">
+          <div class="hero-floating-ep" id="heroSpotlightEp">Total Ep: 12</div>
+        </div>
+      </div>
+
+      <div class="hero-title-area">
+        <h1 class="hero-title" id="heroAnimeTitle">Solo Leveling (Season 2)</h1>
+        <div class="hero-meta-genres" id="heroAnimeGenres">
+          <span>Action</span> • <span>Fantasy</span> • <span>Adventure</span>
+        </div>
+
+        <div class="hero-actions-row">
+          <button class="btn-play-hero" id="heroPlayAction">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Play Now
+          </button>
+          <button class="btn-mylist-hero" id="heroMyListAction">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            + My List
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide Indicator Dots -->
+      <div class="hero-indicators" id="heroIndicatorDots"></div>
+    </div>
+  </section>
+
+  <!-- ═══ COMMUNITY SHARE STRIP (AniReal Direct Replicate) ═══ -->
+  <section class="community-share-box gpu-layer">
+    <div class="community-share-title">If you like this website, please share it with your friends &amp; family!</div>
+    <div class="share-buttons-grid">
+      <button class="share-btn whatsapp" onclick="sharePlatform('whatsapp')">
+        <span>💬 WhatsApp</span>
+      </button>
+      <button class="share-btn telegram" onclick="sharePlatform('telegram')">
+        <span>✈️ Telegram</span>
+      </button>
+      <button class="share-btn facebook" onclick="sharePlatform('facebook')">
+        <span>📘 Facebook</span>
+      </button>
+      <button class="share-btn x-twitter" onclick="sharePlatform('twitter')">
+        <span>✖ X</span>
+      </button>
+    </div>
+    <button class="copy-link-btn" onclick="sharePlatform('copy')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+      Copy Share Link
+    </button>
+  </section>
+
+  <!-- ═══ GENRE CHIPS ═══ -->
+  <div class="filter-chips-wrapper">
+    <div class="filter-chips-scroll" id="genreChipsScroll"></div>
+  </div>
+
+  <!-- ═══ CONTINUE WATCHING (Dynamic) ═══ -->
+  <section class="anime-shelf-section" id="continueWatchingShelf" style="display: none;">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">⏱️</span>
+        <h2 class="shelf-title">Continue Watching</h2>
+      </div>
+      <button class="shelf-see-all" onclick="localStorage.removeItem('toonflix_history');document.getElementById('continueWatchingShelf').style.display='none';window.showToast('History cleared');">Clear</button>
+    </div>
+    <div class="shelf-horizontal-scroll" id="continueWatchingGrid"></div>
+  </section>
+
+  <!-- ═══ ⚡ NEW RELEASES SHELF ═══ -->
+  <section class="anime-shelf-section">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">⚡</span>
+        <h2 class="shelf-title">New Releases</h2>
+      </div>
+      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+    </div>
+    <div class="shelf-horizontal-scroll" id="newReleasesGrid"></div>
+  </section>
+
+  <!-- ═══ 🔥 TOP HITS SHELF ═══ -->
+  <section class="anime-shelf-section">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">🔥</span>
+        <h2 class="shelf-title">Top Hits</h2>
+      </div>
+      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+    </div>
+    <div class="shelf-horizontal-scroll" id="topHitsGrid"></div>
+  </section>
+
+  <!-- ═══ ⭐ POPULAR SHELF ═══ -->
+  <section class="anime-shelf-section">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">⭐</span>
+        <h2 class="shelf-title">Popular</h2>
+      </div>
+      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+    </div>
+    <div class="shelf-horizontal-scroll" id="popularGrid"></div>
+  </section>
+
+  <!-- ═══ 🎬 TOP MOVIES SHELF ═══ -->
+  <section class="anime-shelf-section">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">🎬</span>
+        <h2 class="shelf-title">Top Movies</h2>
+      </div>
+      <a href="#allAnimeShelf" class="shelf-see-all">SEE ALL &gt;</a>
+    </div>
+    <div class="shelf-horizontal-scroll" id="topMoviesGrid"></div>
+  </section>
+
+  <!-- ═══ VIEW ALL ANIMES CTA ═══ -->
+  <div class="view-all-center-box">
+    <a href="#allAnimeShelf" class="btn-view-all-animes">View All Animes</a>
+  </div>
+
+  <!-- ═══ ALL ANIME SECTION (AniReal Language Tabs & Grid) ═══ -->
+  <section class="anime-shelf-section" id="allAnimeShelf">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <span class="shelf-icon">🌌</span>
+        <h2 class="shelf-title">Browse All Anime</h2>
       </div>
     </div>
 
-    <p class="tg-popup-desc">Get fast links &amp; updates instantly.</p>
+    <!-- Language Filter Tabs -->
+    <div class="filter-chips-wrapper" style="padding-bottom: 12px;">
+      <div class="filter-chips-scroll" id="languageChipsScroll"></div>
+    </div>
 
-    <a href="https://t.me/Anime_hindizone" 
-       target="_blank" 
-       rel="noopener" 
-       class="tg-popup-btn" 
-       onclick="closeTgPopup()">
-      Join Channel
-    </a>
+    <div class="all-anime-container">
+      <div class="all-cards-grid" id="allAnimeMainGrid"></div>
+      <div class="pagination-controls" id="animePagination"></div>
+    </div>
+  </section>
+
+  <!-- ═══ INTERACTIVE WATCH & DETAIL MODAL ═══ -->
+  <div class="anime-modal-backdrop" id="animeModalBackdrop">
+    <div class="anime-modal-dialog">
+      <button class="modal-close-trigger" id="modalCloseBtn" aria-label="Close modal">✕</button>
+
+      <!-- Multi-Server Stream Viewport -->
+      <div class="modal-video-shell">
+        <iframe id="modalPlayerIframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+
+      <div class="modal-body-details">
+        <div class="modal-anime-header">
+          <img id="modalAnimePoster" class="modal-anime-poster" src="" alt="Poster">
+          <div class="modal-anime-info-text">
+            <h2 id="modalAnimeTitle" class="modal-anime-title">Anime Title</h2>
+            <div id="modalTagsContainer" class="modal-tags-row"></div>
+            <p id="modalAnimeDesc" class="modal-anime-desc">Description loading...</p>
+          </div>
+        </div>
+
+        <!-- Multi-Server Switcher -->
+        <div class="server-tabs-bar">
+          <button class="server-tab-btn active">⚡ Server 1 (HD Cloud)</button>
+          <button class="server-tab-btn">🚀 Server 2 (Fast Stream)</button>
+          <button class="server-tab-btn">🌟 VIP Hindi Audio</button>
+        </div>
+
+        <!-- Season Selector -->
+        <div class="modal-season-strip" id="modalSeasonStrip"></div>
+
+        <!-- Episode Buttons -->
+        <div class="modal-episodes-grid" id="modalEpisodesGrid"></div>
+
+        <!-- Actions: Telegram + Download -->
+        <div class="modal-action-row">
+          <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="modal-action-btn tg" id="modalTgBtn">
+            <span>📱 Stream on Telegram</span>
+          </a>
+          <button class="modal-action-btn dl" onclick="window.showToast('⬇️ Download link generated!')">
+            <span>⬇️ Instant Download</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<style>
-.tg-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: tgFadeIn 0.3s ease;
-}
-.tg-popup-overlay.show { display: flex; }
-@keyframes tgFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  <!-- ═══ TELEGRAM JOIN POPUP (With Cooldown) ═══ -->
+  <div class="tg-popup-overlay" id="tgPopupOverlay">
+    <div class="tg-popup-card">
+      <button class="tg-popup-close-x" onclick="closeTgPopup()" aria-label="Close Telegram Popup">✕</button>
+      <div class="tg-popup-top">
+        <div class="tg-popup-circle-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="#ffffff">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.26-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+        </div>
+        <div class="tg-popup-titles">
+          <h3>Kyami Animes India</h3>
+          <p>Official Telegram Channel</p>
+        </div>
+      </div>
+      <p class="tg-popup-msg">Get high-speed direct download links, latest Hindi Dubbed anime releases &amp; real-time notifications.</p>
+      <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="tg-popup-join-btn" onclick="closeTgPopup()">
+        Join Telegram Channel
+      </a>
+    </div>
+  </div>
 
-.tg-popup {
-  background: #0d1117;
-  border-radius: 24px;
-  padding: 24px 22px 22px;
-  max-width: 420px;
-  width: 100%;
-  text-align: left;
-  position: relative;
-  box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.8),
-    0 0 0 2px rgba(255, 107, 157, 0.5),
-    0 0 40px rgba(255, 107, 157, 0.4),
-    0 0 0 3px rgba(255, 179, 198, 0.2);
-  animation: tgPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  overflow: hidden;
-}
-.tg-popup::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 26px;
-  padding: 2px;
-  background: linear-gradient(135deg, #ff6b9d, #c084fc, #f97316, #ff6b9d);
-  background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  z-index: -1;
-  animation: gradientShift 4s ease infinite;
-  opacity: 0.7;
-}
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes tgPopIn {
-  from { transform: scale(0.85) translateY(20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
+  <!-- ═══ BENCHMARK FOOTER (AniReal Replicate) ═══ -->
+  <footer class="benchmark-footer">
+    <div class="footer-top-cluster">
+      <div class="footer-brand-side">
+        <div class="footer-brand-title">🔥 Kyami<span>Animes</span>India</div>
+        <p class="footer-brand-desc">Enjoy your favorite anime in Hindi Dubbed &amp; Subbed. High-speed servers with zero buffering.</p>
+        <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="footer-tg-action">
+          <span>✈️ Join on Telegram</span>
+        </a>
+      </div>
 
-.tg-popup-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #2a2f3a;
-  border: none;
-  color: #9ca3af;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s;
-  z-index: 5;
-}
-.tg-popup-close:hover {
-  background: #3a3f4a;
-  color: #fff;
-  transform: rotate(90deg);
-}
+      <div class="footer-links-columns">
+        <div class="footer-col">
+          <h4>QUICK LINKS</h4>
+          <ul>
+            <li><a href="#newReleasesGrid">Movies</a></li>
+            <li><a href="#topHitsGrid">Series</a></li>
+            <li><a href="#genreChipsScroll">Genres</a></li>
+            <li><a href="#allAnimeShelf">Browse All</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>LEGAL</h4>
+          <ul>
+            <li><a href="#" onclick="window.showToast('Kyami Animes India operates as a content indexer.');return false;">Disclaimer</a></li>
+            <li><a href="#" onclick="window.showToast('Your privacy is protected.');return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="window.showToast('DMCA takedown notice email: contact@kyamianimes.com');return false;">DMCA Notice</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-.tg-popup-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
-  padding-right: 40px;
-}
-.tg-popup-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #2AABEE;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 6px 20px rgba(42, 171, 238, 0.4);
-}
-.tg-popup-icon svg {
-  margin-left: -2px;
-  margin-top: 2px;
-}
-.tg-popup-header-text {
-  flex: 1;
-  min-width: 0;
-}
-.tg-popup-header-text h3 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 2px;
-  letter-spacing: -0.3px;
-  line-height: 1.2;
-}
-.tg-popup-subtitle {
-  font-size: 0.95rem;
-  color: #2AABEE;
-  font-weight: 500;
-  margin: 0;
-}
+    <div class="footer-copyright-bar">
+      © 2026 Kyami Animes India — All Rights Reserved. Crafted with ❤️ for Anime Lovers in India.
+    </div>
+  </footer>
 
-.tg-popup-desc {
-  font-size: 1rem;
-  color: #9ca3af;
-  line-height: 1.5;
-  margin-bottom: 22px;
-  padding-right: 10px;
-}
+  <!-- ═══ FIXED BOTTOM DOCK NAVIGATION (AniReal Benchmark) ═══ -->
+  <nav class="bottom-dock-nav gpu-layer">
+    <a href="index.html" class="dock-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span>Home</span>
+    </a>
 
-.tg-popup-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background: #2AABEE;
-  color: #ffffff;
-  padding: 17px 24px;
-  border-radius: 50px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.25s;
-  letter-spacing: 0.2px;
-  position: relative;
-  overflow: hidden;
-}
-.tg-popup-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-  transition: left 0.6s;
-}
-.tg-popup-btn:hover {
-  background: #1E96D4;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(42, 171, 238, 0.5);
-}
-.tg-popup-btn:hover::before { left: 100%; }
-.tg-popup-btn:active { transform: translateY(0); }
+    <a href="#genreChipsScroll" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>Genres</span>
+    </a>
 
-@media (max-width: 480px) {
-  .tg-popup { padding: 22px 18px 18px; border-radius: 22px; }
-  .tg-popup-icon { width: 50px; height: 50px; }
-  .tg-popup-icon svg { width: 28px; height: 28px; }
-  .tg-popup-header-text h3 { font-size: 1.2rem; }
-  .tg-popup-subtitle { font-size: 0.88rem; }
-  .tg-popup-desc { font-size: 0.92rem; }
-  .tg-popup-btn { padding: 15px 20px; font-size: 1rem; }
-  .tg-popup-close { width: 32px; height: 32px; top: 12px; right: 12px; }
-}
-</style>
+    <a href="#continueWatchingShelf" class="dock-item" onclick="var s=document.getElementById('continueWatchingShelf'); if(s) { s.style.display='block'; s.scrollIntoView({behavior:'smooth'}); }">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span>My List</span>
+    </a>
 
-<script>
-(function tgPopupInit() {
-  const STORAGE_KEY = "kyamianimesindia_tg_popup_shown";
-  const SHOW_DELAY = 5000;
-  const COOLDOWN = 24 * 60 * 60 * 1000;
-  
-  const lastShown = localStorage.getItem(STORAGE_KEY);
-  if (lastShown) {
-    const elapsed = Date.now() - parseInt(lastShown);
-    if (elapsed < COOLDOWN) return;
-  }
-  
-  setTimeout(() => {
-    const overlay = document.getElementById("tgPopupOverlay");
-    if (overlay) {
-      overlay.classList.add("show");
-      localStorage.setItem(STORAGE_KEY, Date.now().toString());
-    }
-  }, SHOW_DELAY);
-})();
+    <a href="profile.html" class="dock-item" onclick="window.showToast('👤 Profile: ' + ((window.ToonUser && window.ToonUser.get()) ? window.ToonUser.get().name : 'Guest User')); return false;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span>You</span>
+    </a>
+  </nav>
 
-window.closeTgPopup = function() {
-  const overlay = document.getElementById("tgPopupOverlay");
-  if (overlay) overlay.classList.remove("show");
-};
-
-document.addEventListener("click", function(e) {
-  if (e.target.id === "tgPopupOverlay") closeTgPopup();
-});
-
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") closeTgPopup();
-});
-</script>
-<!-- ═══════════════════════════════════════════ -->
-### Firebase & Core Scripts
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="user.js"></script>
-<script src="i18n.js"></script>
-<script src="analytics.js"></script>
-<script src="script.js"></script>
+  <!-- Firebase Compat SDKs & Core Logic -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
