@@ -1,57 +1,266 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anime Details - Anime Hindi Zone</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Browse All Anime - Kyami Animes India</title>
+  <meta name="description" content="Browse our complete catalog of high-definition anime streaming in Hindi Dubbed & Subbed. Filter by language, genre, and release year with 60fps performance.">
+  <meta property="og:title" content="Browse All Anime - Kyami Animes India">
+  <meta property="og:description" content="Complete anime catalog with Hindi Dubbed episodes, fast streaming, and instant downloads.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#060813">
+
+  <!-- Preconnect Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="top-header">
-  <a href="index.html" class="logo">
-    <span class="logo-icon">🔥</span>
-    <span class="logo-text">Anime<span>Hindi</span>Zone</span>
-    <span class="logo-badge">HINDI</span>
-  </a>
-  <div class="header-extras">
-    <button class="header-icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
-    <button class="header-icon-btn" onclick="toggleLang()">🌐</button>
-    <a href="profile.html" class="header-icon-btn">👤</a>
-    <a href="login.html" class="admin-btn">Admin</a>
+  <!-- ═══ TOP STICKY APP BAR WITH BACK ARROW ═══ -->
+  <header class="top-header gpu-layer">
+    <div class="header-left">
+      <a href="index.html" class="menu-toggle-btn" title="Back to Home" aria-label="Back to Home">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </a>
+      <a href="index.html" class="brand-logo">
+        <div class="brand-symbol">🔥</div>
+        <div class="brand-text">Kyami<span class="highlight">Animes</span>India</div>
+        <span class="brand-badge">HINDI DUB</span>
+      </a>
+    </div>
+
+    <div class="header-right">
+      <button class="header-icon-action" onclick="window.ToonTheme && window.ToonTheme.toggle()" id="themeBtn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
+      <button class="header-icon-action" onclick="window.ToonLang && window.ToonLang.toggle()" title="Toggle Language" aria-label="Toggle Language">🌐</button>
+      <a href="login.html" class="admin-header-btn">Admin</a>
+    </div>
+  </header>
+
+  <!-- ═══ SEARCH BAR WITH INSTANT RESULTS OVERLAY ═══ -->
+  <div class="search-container" id="searchContainer">
+    <div class="search-glass-bar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search across all anime, genres, languages..." autocomplete="off">
+      <button class="search-submit-btn" id="searchGoBtn">SEARCH</button>
+    </div>
+
+    <!-- Live Search Overlay -->
+    <div class="search-results-overlay" id="searchResultsOverlay" style="display: none;">
+      <div class="search-results-top">
+        <span id="searchResultsHeading">Search Results</span>
+        <button class="search-close-x" onclick="document.getElementById('searchResultsOverlay').style.display='none'" aria-label="Close Search">✕</button>
+      </div>
+      <div class="search-cards-grid" id="searchCardsGrid"></div>
+    </div>
   </div>
-</header>
 
-<div class="detail-container" id="detailContainer">
-  <p class="empty-msg" style="text-align:center;padding:60px 20px;">⏳ Loading...</p>
-</div>
+  <!-- ═══ DEDICATED BROWSE SECTION ═══ -->
+  <div class="browse-page-hero">
+    <div class="browse-page-title-wrap">
+      <h1 class="browse-page-title">
+        <span>🌌</span>
+        <span>Browse All Anime</span>
+      </h1>
+      <span class="browse-count-pill" id="browseTotalCount">Loading Catalog...</span>
+    </div>
 
-<footer class="premium-footer">
-  <div class="footer-logo">🔥 Anime<span>Hindi</span>Zone</div>
-  <p class="footer-copy">© 2025 Anime Hindi Zone — All Rights Reserved</p>
-</footer>
+    <!-- Language Filter Tabs -->
+    <div class="filter-chips-wrapper">
+      <div class="filter-chips-scroll" id="languageChipsScroll"></div>
+    </div>
 
-<script>
-function toggleTheme() {
-  if (typeof ToonTheme === "undefined") return;
-  const t = ToonTheme.toggle();
-  document.getElementById("themeBtn").textContent = t === "dark" ? "🌙" : "☀️";
-}
-function toggleLang() { if (typeof ToonLang !== "undefined") ToonLang.toggle(); }
-document.addEventListener("DOMContentLoaded", function() {
-  if (typeof ToonTheme !== "undefined") {
-    const btn = document.getElementById("themeBtn");
-    if (btn) btn.textContent = ToonTheme.get() === "dark" ? "🌙" : "☀️";
-  }
-});
-</script>
+    <!-- Genre Filter Chips -->
+    <div class="filter-chips-wrapper" id="genres">
+      <div class="filter-chips-scroll" id="genreChipsScroll"></div>
+    </div>
+  </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="user.js"></script>
-<script src="i18n.js"></script>
-<script src="analytics.js"></script>
-<script src="script.js"></script>
+  <!-- ═══ ADVANCED FILTER ACCORDION ═══ -->
+  <div class="filter-dropdown-bar">
+    <button class="filter-dropdown-trigger" id="filterAccordionTrigger">
+      <span>⚡ Filter by Year &amp; Rating</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="filter-accordion-body" id="filterAccordionBody">
+    <div class="filter-grid-fields">
+      <div class="filter-field">
+        <label>📅 Release Year</label>
+        <select id="filterYearSelect">
+          <option value="All">All Years</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="Classic">Classic (< 2020)</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>⭐ Minimum Rating</label>
+        <select id="filterRatingSelect">
+          <option value="All">Any Rating</option>
+          <option value="9">⭐ 9.0+ (Masterpiece)</option>
+          <option value="8.5">⭐ 8.5+ (Outstanding)</option>
+          <option value="8">⭐ 8.0+ (Great)</option>
+          <option value="7">⭐ 7.0+ (Good)</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>🎬 Format</label>
+        <select id="filterFormatSelect">
+          <option value="All">All Formats</option>
+          <option value="TV">TV Series</option>
+          <option value="MOVIE">Movie</option>
+          <option value="OVA">OVA / Special</option>
+        </select>
+      </div>
+    </div>
+    <div class="filter-actions-group">
+      <button class="filter-btn-apply" id="applyFilterBtn">Apply Filters</button>
+      <button class="filter-btn-reset" id="resetFilterBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- ═══ COMPLETE ANIMATED CARDS GRID & PAGINATION ═══ -->
+  <div class="all-anime-container">
+    <div class="all-cards-grid" id="browseAnimeGrid"></div>
+    <div class="pagination-controls" id="animePagination"></div>
+  </div>
+
+  <!-- ═══ INTERACTIVE WATCH & DETAIL MODAL ═══ -->
+  <div class="anime-modal-backdrop" id="animeModalBackdrop">
+    <div class="anime-modal-dialog">
+      <button class="modal-close-trigger" id="modalCloseBtn" aria-label="Close modal">✕</button>
+
+      <!-- Multi-Server Stream Viewport -->
+      <div class="modal-video-shell">
+        <iframe id="modalPlayerIframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+
+      <div class="modal-body-details">
+        <div class="modal-anime-header">
+          <img id="modalAnimePoster" class="modal-anime-poster" src="" alt="Poster">
+          <div class="modal-anime-info-text">
+            <h2 id="modalAnimeTitle" class="modal-anime-title">Anime Title</h2>
+            <div id="modalTagsContainer" class="modal-tags-row"></div>
+            <p id="modalAnimeDesc" class="modal-anime-desc">Description loading...</p>
+          </div>
+        </div>
+
+        <!-- Multi-Server Switcher -->
+        <div class="server-tabs-bar">
+          <button class="server-tab-btn active">⚡ Server 1 (HD Cloud)</button>
+          <button class="server-tab-btn">🚀 Server 2 (Fast Stream)</button>
+          <button class="server-tab-btn">🌟 VIP Hindi Audio</button>
+        </div>
+
+        <!-- Season Selector -->
+        <div class="modal-season-strip" id="modalSeasonStrip"></div>
+
+        <!-- Episode Buttons -->
+        <div class="modal-episodes-grid" id="modalEpisodesGrid"></div>
+
+        <!-- Actions: Telegram + Download -->
+        <div class="modal-action-row">
+          <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="modal-action-btn tg" id="modalTgBtn">
+            <span>📱 Stream on Telegram</span>
+          </a>
+          <button class="modal-action-btn dl" onclick="window.showToast('⬇️ Download link generated!')">
+            <span>⬇️ Instant Download</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BENCHMARK FOOTER ═══ -->
+  <footer class="benchmark-footer">
+    <div class="footer-top-cluster">
+      <div class="footer-brand-side">
+        <div class="footer-brand-title">🔥 Kyami<span>Animes</span>India</div>
+        <p class="footer-brand-desc">Enjoy your favorite anime in Hindi Dubbed &amp; Subbed. High-speed servers with zero buffering.</p>
+        <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="footer-tg-action">
+          <span>✈️ Join on Telegram</span>
+        </a>
+      </div>
+
+      <div class="footer-links-columns">
+        <div class="footer-col">
+          <h4>QUICK LINKS</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="anime.html">All Movies</a></li>
+            <li><a href="anime.html">All Series</a></li>
+            <li><a href="#genres">Genres</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>LEGAL</h4>
+          <ul>
+            <li><a href="#" onclick="window.showToast('Kyami Animes India operates as a content indexer.');return false;">Disclaimer</a></li>
+            <li><a href="#" onclick="window.showToast('Your privacy is protected.');return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="window.showToast('DMCA takedown notice email: contact@kyamianimes.com');return false;">DMCA Notice</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright-bar">
+      © 2026 Kyami Animes India — All Rights Reserved. Crafted with ❤️ for Anime Lovers in India.
+    </div>
+  </footer>
+
+  <!-- ═══ FIXED BOTTOM DOCK NAVIGATION ═══ -->
+  <nav class="bottom-dock-nav gpu-layer">
+    <a href="index.html" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span>Home</span>
+    </a>
+
+    <a href="#genres" class="dock-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>Genres</span>
+    </a>
+
+    <a href="index.html#continueWatchingShelf" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span>My List</span>
+    </a>
+
+    <a href="profile.html" class="dock-item" onclick="window.showToast('👤 Profile: ' + ((window.ToonUser && window.ToonUser.get()) ? window.ToonUser.get().name : 'Guest User')); return false;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span>You</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Compat SDKs & Core Logic -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
