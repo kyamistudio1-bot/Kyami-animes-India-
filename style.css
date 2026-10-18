@@ -11,10 +11,10 @@
   --bg-surface: #0b0f24;
   --bg-surface-elevated: #111736;
   
-  --glass-bg: rgba(12, 17, 38, 0.75);
-  --glass-bg-hover: rgba(20, 27, 58, 0.85);
+  --glass-bg: rgba(12, 17, 38, 0.78);
+  --glass-bg-hover: rgba(20, 27, 58, 0.88);
   --glass-border: rgba(59, 130, 246, 0.22);
-  --glass-border-hover: rgba(34, 211, 238, 0.55);
+  --glass-border-hover: rgba(56, 189, 248, 0.6);
   --glass-glow: 0 0 25px rgba(37, 99, 235, 0.35);
 
   /* Vibrant Accents */
@@ -67,9 +67,9 @@ html {
 body {
   background: var(--bg-base);
   background-image: 
-    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.16), transparent 45%),
-    radial-gradient(circle at 85% 25%, rgba(6, 182, 212, 0.12), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.10), transparent 50%);
+    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(6, 182, 212, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.12), transparent 50%);
   background-attachment: fixed;
   color: var(--text-main);
   min-height: 100vh;
@@ -93,7 +93,7 @@ body {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.09) 37%,
+    rgba(255, 255, 255, 0.12) 37%,
     rgba(255, 255, 255, 0.04) 63%
   );
   background-size: 400% 100%;
@@ -114,7 +114,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(6, 8, 19, 0.85);
+  background: rgba(6, 8, 19, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 900;
@@ -123,8 +123,8 @@ body {
 }
 
 .top-header.scrolled {
-  background: rgba(6, 8, 19, 0.96);
-  border-bottom-color: rgba(56, 189, 248, 0.3);
+  background: rgba(6, 8, 19, 0.98);
+  border-bottom-color: rgba(56, 189, 248, 0.35);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
 }
 
@@ -333,7 +333,7 @@ body {
   top: 100%;
   left: 16px;
   right: 16px;
-  background: rgba(11, 15, 36, 0.95);
+  background: rgba(11, 15, 36, 0.96);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   border: 1px solid var(--glass-border-hover);
@@ -436,40 +436,45 @@ body {
   margin-top: 2px;
 }
 
-/* ═══ ANIREAL BENCHMARK HERO SECTION ═══ */
+/* ═══ ANIREAL BENCHMARK HERO SECTION (ENHANCED VIBRANT BACKDROP) ═══ */
 .hero-benchmark {
   position: relative;
   margin: 10px 16px 20px;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  min-height: 380px;
-  background: #090d20;
+  min-height: 390px;
+  background: radial-gradient(circle at 75% 30%, rgba(37, 99, 235, 0.35) 0%, rgba(6, 8, 19, 0.95) 100%), #060813;
   border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), 0 0 35px rgba(37, 99, 235, 0.25);
 }
 
-/* Cinematic Blurred Backdrop */
+/* Rich Blurred Backdrop Layers */
 .hero-backdrop-layer {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
+  overflow: hidden;
 }
 
 .hero-backdrop-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(28px) brightness(0.42);
-  transform: scale(1.18);
-  transition: opacity 0.6s var(--ease-smooth);
+  filter: blur(18px) brightness(0.82) saturate(1.4);
+  transform: scale(1.15);
+  opacity: 0.9;
+  transition: opacity 0.5s var(--ease-smooth), transform 6s ease-out;
+  will-change: opacity, transform;
 }
 
 .hero-backdrop-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 75% 40%, rgba(6, 8, 19, 0.3) 0%, rgba(6, 8, 19, 0.94) 85%);
+  background: 
+    linear-gradient(180deg, rgba(6, 8, 19, 0.2) 0%, rgba(6, 8, 19, 0.65) 55%, rgba(6, 8, 19, 0.96) 100%),
+    radial-gradient(circle at 80% 40%, rgba(34, 211, 238, 0.2) 0%, rgba(6, 8, 19, 0.85) 90%);
 }
 
 /* Hero Content Flex Layout */
@@ -480,7 +485,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 380px;
+  min-height: 390px;
 }
 
 .hero-spotlight-top {
@@ -491,27 +496,31 @@ body {
 }
 
 .hero-floating-card {
-  width: 130px;
+  width: 135px;
   aspect-ratio: 2/3;
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(56, 189, 248, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.45), 0 0 0 2px rgba(56, 189, 248, 0.7);
   align-self: flex-end;
   margin-left: auto;
   flex-shrink: 0;
   cursor: pointer;
-  transition: transform 0.4s var(--ease-spring);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring);
+  transform: translate3d(0, 0, 0);
+  background: #111736;
 }
 
 .hero-floating-card:hover {
   transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.9), 0 0 45px rgba(56, 189, 248, 0.65), 0 0 0 2px rgba(56, 189, 248, 0.9);
 }
 
 .hero-floating-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .hero-floating-ep {
@@ -519,14 +528,15 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(6, 8, 19, 0.88);
-  backdrop-filter: blur(6px);
+  background: rgba(6, 8, 19, 0.9);
+  backdrop-filter: blur(8px);
   color: #fff;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-align: center;
-  padding: 4px;
-  border-top: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 5px;
+  border-top: 1px solid rgba(56, 189, 248, 0.4);
+  letter-spacing: 0.3px;
 }
 
 .hero-title-area {
@@ -537,15 +547,16 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(56, 189, 248, 0.3));
-  border: 1px solid rgba(56, 189, 248, 0.5);
-  color: var(--electric-blue);
-  padding: 5px 12px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(56, 189, 248, 0.4));
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  color: #fff;
+  padding: 5px 13px;
   border-radius: var(--radius-full);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   margin-bottom: 10px;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
 }
 
 .hero-title {
@@ -554,7 +565,7 @@ body {
   line-height: 1.25;
   color: #fff;
   margin-bottom: 6px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -563,7 +574,7 @@ body {
 
 .hero-meta-genres {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: #cbd5e1;
   margin-bottom: 18px;
   font-weight: 500;
   display: flex;
@@ -609,10 +620,10 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 12px 24px;
   border-radius: var(--radius-full);
@@ -623,8 +634,8 @@ body {
 }
 
 .btn-mylist-hero:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(56, 189, 248, 0.6);
   transform: translateY(-2px);
 }
 
@@ -639,7 +650,7 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   cursor: pointer;
   transition: all 0.3s var(--ease-spring);
 }
@@ -648,7 +659,7 @@ body {
   width: 24px;
   border-radius: 4px;
   background: var(--electric-blue);
-  box-shadow: 0 0 10px var(--electric-blue);
+  box-shadow: 0 0 12px var(--electric-blue);
 }
 
 /* ═══ COMMUNITY SHARE STRIP (AniReal Direct Replicate) ═══ */
@@ -993,7 +1004,7 @@ body {
   position: relative;
   border-radius: var(--radius-md);
   background: var(--bg-surface);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -1194,9 +1205,75 @@ body {
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
 }
 
-/* ═══ ALL ANIME GRID & PAGINATION ═══ */
+/* ═══ VIEW ALL ANIMES CTA BUTTON ═══ */
+.view-all-center-box {
+  padding: 30px 16px 20px;
+  text-align: center;
+}
+
+.btn-view-all-animes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 440px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.5), 0 0 25px rgba(56, 189, 248, 0.35);
+  transition: all 0.3s var(--ease-spring);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-view-all-animes:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 18px 45px rgba(56, 189, 248, 0.7);
+}
+
+/* ═══ DEDICATED BROWSE PAGE (ANIME.HTML) ═══ */
+.browse-page-hero {
+  padding: 18px 16px 10px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.browse-page-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.browse-page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.browse-count-pill {
+  font-size: 0.78rem;
+  color: var(--electric-blue);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
 .all-anime-container {
   padding: 0 16px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .all-cards-grid {
@@ -1227,34 +1304,6 @@ body {
   .all-cards-grid {
     grid-template-columns: repeat(6, 1fr);
   }
-}
-
-/* View All Centered CTA */
-.view-all-center-box {
-  padding: 24px 16px 10px;
-  text-align: center;
-}
-
-.btn-view-all-animes {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 380px;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, #2563eb, #38bdf8);
-  color: #fff;
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 800;
-  border-radius: var(--radius-full);
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.45);
-  transition: all 0.3s var(--ease-spring);
-}
-
-.btn-view-all-animes:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(56, 189, 248, 0.65);
 }
 
 /* Benchmark Pagination */
@@ -1306,7 +1355,7 @@ body {
 .anime-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   z-index: 2000;
@@ -1379,19 +1428,6 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-}
-
-.modal-player-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: linear-gradient(135deg, #090e22, #111a3d);
-  padding: 20px;
-  text-align: center;
 }
 
 .modal-body-details {
@@ -1722,7 +1758,7 @@ body {
   margin-top: 40px;
   padding: 36px 20px 24px;
   border-top: 1px solid var(--glass-border);
-  background: rgba(6, 8, 19, 0.9);
+  background: rgba(6, 8, 19, 0.92);
 }
 
 .footer-top-cluster {
@@ -1951,7 +1987,8 @@ body {
   .community-share-box,
   .anime-shelf-section,
   .all-anime-container,
-  .search-container {
+  .search-container,
+  .browse-page-hero {
     max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
