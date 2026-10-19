@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // KYAMI ANIMES INDIA — MASTER SCRIPT ENGINE (60FPS)
-// High-Speed Animations, Dynamic Backdrop Carousel & Full Route Integration N
+// High-Speed Animations, Dual-Layer Crossfade Carousel & Full Route Integration
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (function() {
@@ -443,8 +443,8 @@
     }
   }
 
-  // ═══ ANIME CARD BUILDER (ZERO-JANK) ═══
-  function buildAnimeCardHTML(anime, rank) {
+  // ═══ 1. FLEXIBLE ANIME CARD BUILDER (SUPPORTS 16:10 LANDSCAPE & 2:3 PORTRAIT) ═══
+  function buildAnimeCardHTML(anime, rank, isLandscape) {
     var isOngoing = anime.status === "ongoing" || (anime.totalEp && anime.totalEp.toLowerCase().includes("ongoing"));
     var statusClass = isOngoing ? "ongoing" : "finished";
     var statusLabel = isOngoing ? "ONGOING" : "FINISHED";
@@ -452,12 +452,16 @@
     var epLabel = anime.totalEp || (anime.episodes ? "Ep: " + Object.keys(anime.episodes).length : "Ep: 12");
     var genrePrimary = (anime.genres || "Anime").split(",")[0].trim();
     var isFav = window.ToonFav.isFav(anime.id);
-    var posterUrl = (anime.poster && !anime.poster.includes("unsplash.com")) 
-      ? anime.poster 
-      : "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png";
+
+    // If landscape mode (New Releases shelf), use high-resolution banner image
+    var imgUrl = isLandscape 
+      ? ((anime.banner && !anime.banner.includes("unsplash.com")) ? anime.banner : anime.poster)
+      : ((anime.poster && !anime.poster.includes("unsplash.com")) ? anime.poster : "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png");
+
+    var cardBoxClass = "anime-card-box gpu-layer" + (isLandscape ? " anime-card-landscape" : "");
 
     return (
-      '<div class="anime-card-box gpu-layer" data-anime-id="' + anime.id + '">' +
+      '<div class="' + cardBoxClass + '" data-anime-id="' + anime.id + '">' +
         (rank ? '<span class="top10-rank-pill">' + rank + '</span>' : '') +
         '<span class="card-badge-status ' + statusClass + '">' + statusLabel + '</span>' +
         '<span class="card-badge-rating ' + (parseFloat(ratingVal) >= 8.5 ? 'gold' : '') + '">' +
@@ -467,7 +471,7 @@
           (isFav ? '❤️' : '🤍') +
         '</button>' +
         '<div class="card-poster-wrap skeleton">' +
-          '<img class="card-poster-img" src="' + posterUrl + '" loading="lazy" alt="' + (anime.title || "Anime") + '" onload="this.parentElement.classList.remove(\'skeleton\')" onerror="this.src=\'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png\'">' +
+          '<img class="card-poster-img" src="' + imgUrl + '" loading="lazy" alt="' + (anime.title || "Anime") + '" onload="this.parentElement.classList.remove(\'skeleton\')" onerror="this.src=\'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png\'">' +
           '<div class="card-poster-overlay">' +
             '<span class="card-tag-hd">HD</span>' +
             '<span class="card-tag-ep">' + epLabel + '</span>' +
@@ -481,15 +485,16 @@
     );
   }
 
-  // ═══ HERO CAROUSEL CONTROLLER (KEN BURNS 60FPS AMBIENT BACKDROP) ═══
+  // ═══ 2 & 3. DUAL-LAYER DISSOLVE HERO CAROUSEL CONTROLLER (60FPS CROSSFADE) ═══
   function updateHeroSlide(index) {
     if (!state.animeList.length) return;
     var heroList = state.animeList.slice(0, 5);
     var item = heroList[index % heroList.length];
     if (!item) return;
 
-    var backdropLayer = document.querySelector(".hero-backdrop-layer") || document.getElementById("heroBackdropLayer");
-    var bgImg = document.getElementById("heroBackdropImg");
+    var layerA = document.getElementById("heroBackdropA");
+    var layerB = document.getElementById("heroBackdropB");
+    var contentWrap = document.getElementById("heroContentWrap");
     var spotlightCard = document.getElementById("heroSpotlightCard");
     var spotlightImg = document.getElementById("heroSpotlightImg");
     var spotlightEp = document.getElementById("heroSpotlightEp");
@@ -502,25 +507,31 @@
       ? item.banner 
       : item.poster;
 
-    // Dual-Update: Set CSS background-image on backdrop container + <img> tag
-    if (backdropLayer) {
-      backdropLayer.style.backgroundImage = 'url("' + nextBanner + '")';
+    // Dual-Layer Crossfade: Incoming layer preloads and dissolves smoothly over outgoing layer
+    if (layerA && layerB) {
+      var isACurrent = layerA.classList.contains("active");
+      var incomingLayer = isACurrent ? layerB : layerA;
+      var outgoingLayer = isACurrent ? layerA : layerB;
+
+      var preloader = new Image();
+      preloader.onload = function() {
+        incomingLayer.style.backgroundImage = 'url("' + nextBanner + '")';
+        incomingLayer.classList.add("active");
+        outgoingLayer.classList.remove("active");
+      };
+      preloader.onerror = function() {
+        incomingLayer.style.backgroundImage = 'url("' + item.poster + '")';
+        incomingLayer.classList.add("active");
+        outgoingLayer.classList.remove("active");
+      };
+      preloader.src = nextBanner;
     }
 
-    if (bgImg) {
-      if (bgImg.src !== nextBanner) {
-        bgImg.style.opacity = "0.4";
-        var preloader = new Image();
-        preloader.onload = function() {
-          bgImg.src = nextBanner;
-          bgImg.style.opacity = "0.92";
-        };
-        preloader.onerror = function() {
-          bgImg.src = item.poster;
-          bgImg.style.opacity = "0.92";
-        };
-        preloader.src = nextBanner;
-      }
+    // Trigger subtle, silky smooth slide animation on spotlight card & text
+    if (contentWrap) {
+      contentWrap.classList.remove("slide-animate");
+      void contentWrap.offsetWidth; // Force reflow
+      contentWrap.classList.add("slide-animate");
     }
 
     if (spotlightImg) {
@@ -583,38 +594,42 @@
       }
       shelf.style.display = "block";
       grid.innerHTML = history.slice(0, 10).map(function(item) {
-        return buildAnimeCardHTML(item, null);
+        return buildAnimeCardHTML(item, null, false);
       }).join("");
     } catch (e) {
       shelf.style.display = "none";
     }
   }
 
+  // ── New Releases uses distinct 16:10 widescreen landscape cards ──
   function renderNewReleases() {
     var el = document.getElementById("newReleasesGrid");
     if (!el) return;
     var list = [...state.animeList]
       .sort(function(a, b) { return (b.year || 0) - (a.year || 0); })
       .slice(0, 10);
-    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null); }).join("");
+    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null, true); }).join("");
   }
 
+  // ── Top Hits uses 2:3 portrait cards with rank pill ──
   function renderTopHits() {
     var el = document.getElementById("topHitsGrid");
     if (!el) return;
     var list = [...state.animeList]
       .sort(function(a, b) { return parseFloat(b.rating || 0) - parseFloat(a.rating || 0); })
       .slice(0, 10);
-    el.innerHTML = list.map(function(item, idx) { return buildAnimeCardHTML(item, idx + 1); }).join("");
+    el.innerHTML = list.map(function(item, idx) { return buildAnimeCardHTML(item, idx + 1, false); }).join("");
   }
 
+  // ── Popular uses standard 2:3 portrait cards ──
   function renderPopular() {
     var el = document.getElementById("popularGrid");
     if (!el) return;
     var list = state.animeList.slice(2, 12);
-    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null); }).join("");
+    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null, false); }).join("");
   }
 
+  // ── Top Movies uses standard 2:3 portrait cards ──
   function renderTopMovies() {
     var el = document.getElementById("topMoviesGrid");
     if (!el) return;
@@ -622,7 +637,7 @@
       return (x.totalEp && x.totalEp.toUpperCase().includes("MOVIE")) || (x.format && x.format.toUpperCase() === "MOVIE");
     });
     if (!list.length) list = state.animeList.slice(0, 6);
-    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null); }).join("");
+    el.innerHTML = list.map(function(item) { return buildAnimeCardHTML(item, null, false); }).join("");
   }
 
   function renderGenreChips() {
@@ -692,7 +707,7 @@
       '</div>';
     } else {
       grid.innerHTML = pageItems.map(function(item) {
-        return buildAnimeCardHTML(item, null);
+        return buildAnimeCardHTML(item, null, false);
       }).join("");
     }
 
@@ -1150,7 +1165,7 @@
       }, { passive: true });
       heroEl.addEventListener("touchend", function(e) {
         var diff = startX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 45) {
+        if (Math.abs(diff) > 40) {
           if (diff > 0) {
             state.heroIndex = (state.heroIndex + 1) % Math.min(state.animeList.length, 5);
           } else {
