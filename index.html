@@ -15,7 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <!-- Versioned Stylesheet Cache Busting -->
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
@@ -83,7 +84,7 @@
           <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
-          <option value="Classic">Classic (< 2020)</option>
+          <option value="Classic">Classic (&lt; 2020)</option>
         </select>
       </div>
       <div class="filter-field">
@@ -114,18 +115,19 @@
 
   <!-- ═══ ANIREAL BENCHMARK HERO SECTION (ANIMATED BLURRED BACKDROP) ═══ -->
   <section class="hero-benchmark gpu-layer" id="heroBenchmarkSection">
-    <!-- Blurred Cinematic Backdrop -->
-    <div class="hero-backdrop-layer">
-      <img id="heroBackdropImg" class="hero-backdrop-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1280&auto=format&fit=crop&q=80" alt="Anime Backdrop Banner">
+    <!-- Dual-Layer Dissolve Crossfade Backdrop (Single Accelerated Surface - No Distortion) -->
+    <div class="hero-backdrop-container" id="heroBackdropContainer">
+      <div class="hero-backdrop-slide active" id="heroBackdropA" style="background-image: url('https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg');"></div>
+      <div class="hero-backdrop-slide" id="heroBackdropB"></div>
       <div class="hero-backdrop-vignette"></div>
     </div>
 
     <!-- Spotlight Content -->
-    <div class="hero-content-wrap">
+    <div class="hero-content-wrap" id="heroContentWrap">
       <div class="hero-spotlight-top">
         <div class="hero-pill-badge">🔥 FEATURED SPOTLIGHT</div>
-        <div class="hero-floating-card" id="heroSpotlightCard">
-          <img id="heroSpotlightImg" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80" alt="Spotlight Poster">
+        <div class="hero-floating-card" id="heroSpotlightCard" data-anime-id="demon-slayer-hashira">
+          <img id="heroSpotlightImg" src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png" alt="Demon Slayer Spotlight Poster">
           <div class="hero-floating-ep" id="heroSpotlightEp">Total Ep: 08</div>
         </div>
       </div>
@@ -201,7 +203,7 @@
     <div class="shelf-horizontal-scroll" id="continueWatchingGrid"></div>
   </section>
 
-  <!-- ═══ ⚡ NEW RELEASES SHELF ═══ -->
+  <!-- ═══ ⚡ NEW RELEASES SHELF (WIDESCREEN 16:10 CARDS) ═══ -->
   <section class="anime-shelf-section">
     <div class="shelf-header">
       <div class="shelf-title-wrap">
@@ -400,9 +402,9 @@
     </a>
   </nav>
 
-  <!-- Firebase Compat SDKs & Core Logic -->
+  <!-- Firebase Compat SDKs & Core Logic with Cache Busting v=3.0 -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=3.0"></script>
 </body>
 </html>
