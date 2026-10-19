@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // KYAMI ANIMES INDIA — MASTER SCRIPT ENGINE (60FPS)
-// High-Speed Animations, Dynamic Backdrop Carousel & Full Route Integration
+// High-Speed Animations, Dynamic Backdrop Carousel & Full Route Integration N
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (function() {
