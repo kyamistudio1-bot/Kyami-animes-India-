@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
-   KYAMI ANIMES INDIAA — ULTRA-PERFORMANCE STYLESHEET (60FPS)
-   Engineered for Mobile Chrome: Zero Blur-Drop, Ken Burns Motion
+   KYAMI ANIMES INDIA — ULTRA-PERFORMANCE STYLESHEET (60FPS)
+   Engineered for Mobile Chrome: Zero Blur-Drop, Ken Burns Motion,
+   Distinct Box Ratios (16:10 Widescreen & 2:3 Portrait), Dual Crossfade
    ═══════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
@@ -541,7 +542,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HERO SPOTLIGHT SECTION (KEN BURNS 60FPS AMBIENT BACKDROP)
+   HERO SPOTLIGHT SECTION (DUAL-LAYER DISSOLVE & KEN BURNS 60FPS)
    ═══════════════════════════════════════════════════════════════ */
 .hero-benchmark {
   position: relative;
@@ -562,43 +563,43 @@ body {
     transform: scale(1.02) translate3d(0, 0, 0);
   }
   50% {
-    transform: scale(1.12) translate3d(-10px, -6px, 0);
+    transform: scale(1.10) translate3d(-8px, -4px, 0);
   }
   100% {
-    transform: scale(1.06) translate3d(8px, 4px, 0);
+    transform: scale(1.05) translate3d(6px, 3px, 0);
   }
 }
 
-/* Dual-Redundant Backdrop Layer: CSS background-image + Ken Burns */
-.hero-backdrop-layer {
+/* Dual-Layer Crossfade Container: eliminates double images & flashing */
+.hero-backdrop-container {
   position: absolute;
-  inset: -20px; /* Overhang prevents transform clipping edges */
+  inset: -15px;
   z-index: 1;
   overflow: hidden;
+}
+
+.hero-backdrop-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center 25%;
   background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1);
   animation: heroKenBurns 20s ease-in-out infinite alternate;
-  will-change: transform;
+  will-change: transform, opacity;
   transform: translate3d(0, 0, 0);
-  transition: background-image 0.5s ease-in-out;
 }
 
-.hero-backdrop-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 25%;
-  opacity: 0.92;
-  transition: opacity 0.5s ease-in-out;
-  display: block;
-  pointer-events: none;
+.hero-backdrop-slide.active {
+  opacity: 0.95;
 }
 
 /* Atmospheric Vignette Overlay (Guarantees Vivid Artwork Visibility, NOT pitch black) */
 .hero-backdrop-vignette {
   position: absolute;
   inset: 0;
+  z-index: 2;
   background: 
     linear-gradient(180deg, rgba(6, 8, 19, 0.05) 0%, rgba(6, 8, 19, 0.25) 40%, rgba(6, 8, 19, 0.88) 85%, rgba(6, 8, 19, 0.98) 100%),
     radial-gradient(circle at 75% 30%, rgba(56, 189, 248, 0.16) 0%, transparent 65%),
@@ -609,12 +610,29 @@ body {
 /* Hero Content Flex Layout */
 .hero-content-wrap {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   padding: 24px 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-height: 400px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Slide animation hook for seamless transitions */
+@keyframes heroContentSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content-wrap.slide-animate {
+  animation: heroContentSlideIn 0.35s var(--ease-spring) forwards;
 }
 
 .hero-spotlight-top {
@@ -624,6 +642,7 @@ body {
   margin-bottom: 16px;
 }
 
+/* Floating Card with Character Face Focus (Center 15%) */
 .hero-floating-card {
   width: 135px;
   aspect-ratio: 2/3;
@@ -649,6 +668,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%; /* Protects anime character eyes and faces from being cropped */
   display: block;
 }
 
@@ -975,8 +995,12 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ANIME CARD COMPONENT (AniReal Benchmark - 60FPS Elevated)
+   1. DISTINCT SHELF CARD RATIOS:
+      - WIDESCREEN 16:10 FOR NEW RELEASES
+      - VERTICAL 2:3 FOR TOP HITS, POPULAR, MOVIES
    ═══════════════════════════════════════════════════════════════ */
+
+/* ── Standard Portrait Cards (2:3 Ratio) ── */
 .anime-card-box {
   flex: 0 0 135px;
   width: 135px;
@@ -1013,12 +1037,31 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
   display: block;
   transition: transform 0.4s var(--ease-smooth);
 }
 
 .anime-card-box:hover .card-poster-img {
   transform: scale(1.08);
+}
+
+/* ── Widescreen Landscape Cards (16:10 Ratio) for New Releases ── */
+#newReleasesGrid .anime-card-box,
+.anime-card-box.anime-card-landscape {
+  flex: 0 0 240px;
+  width: 240px;
+}
+
+#newReleasesGrid .card-poster-wrap,
+.anime-card-box.anime-card-landscape .card-poster-wrap {
+  aspect-ratio: 16/10 !important;
+  border-radius: var(--radius-md);
+}
+
+#newReleasesGrid .card-poster-img,
+.anime-card-box.anime-card-landscape .card-poster-img {
+  object-position: center 20% !important;
 }
 
 /* Badges on Poster */
@@ -1855,6 +1898,12 @@ body {
   .anime-card-box {
     flex: 0 0 160px;
     width: 160px;
+  }
+
+  #newReleasesGrid .anime-card-box,
+  .anime-card-box.anime-card-landscape {
+    flex: 0 0 280px;
+    width: 280px;
   }
 
   .search-container {
