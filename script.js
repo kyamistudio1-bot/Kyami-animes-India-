@@ -18,9 +18,7 @@
     {
       id: "demon-slayer-hashira",
       title: "Demon Slayer: Hashira Training Arc",
-      // 👇 LINE 24: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png",
-      // 👇 LINE 26: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg",
       rating: "9.1",
       year: "2024",
@@ -41,9 +39,7 @@
     {
       id: "solo-leveling",
       title: "Solo Leveling (Season 2: Arise)",
-      // 👇 LINE 48: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151807-it355ZgzquUd.png",
-      // 👇 LINE 50: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151807-37yfQA3ym8PA.jpg",
       rating: "9.3",
       year: "2024",
@@ -64,9 +60,7 @@
     {
       id: "classroom-of-elite-3",
       title: "Classroom of the Elite Season 3",
-      // 👇 LINE 72: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx146066-zzKl6P6OeEjy.jpg",
-      // 👇 LINE 74: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/146066-gxjPUB1ofAO4.jpg",
       rating: "8.8",
       year: "2024",
@@ -81,9 +75,7 @@
     {
       id: "jujutsu-kaisen-s2",
       title: "Jujutsu Kaisen: Shibuya Incident",
-      // 👇 LINE 90: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx145064-hSNRJM03pvv1.jpg",
-      // 👇 LINE 92: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/145064-esDtAY2He7sk.jpg",
       rating: "9.4",
       year: "2023",
@@ -98,9 +90,7 @@
     {
       id: "mushoku-tensei-s2",
       title: "Mushoku Tensei: Jobless Reincarnation S2",
-      // 👇 LINE 108: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx146065-IjirxRK26O03.png",
-      // 👇 LINE 110: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/146065-33RDijfuxLLk.jpg",
       rating: "8.9",
       year: "2024",
@@ -115,9 +105,7 @@
     {
       id: "one-piece-egghead",
       title: "One Piece: Egghead Island Arc",
-      // 👇 LINE 126: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-ELSYx3yMPcKM.jpg",
-      // 👇 LINE 128: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg",
       rating: "9.5",
       year: "2024",
@@ -132,9 +120,7 @@
     {
       id: "bleach-tybw",
       title: "BLEACH: Thousand-Year Blood War",
-      // 👇 LINE 144: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx116674-p3zK4PUX2Aag.jpg",
-      // 👇 LINE 146: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/116674-l2YlIyJzvGSV.jpg",
       rating: "9.2",
       year: "2024",
@@ -149,9 +135,7 @@
     {
       id: "the-ramparts-of-ice",
       title: "The Ramparts of Ice Season 2",
-      // 👇 LINE 162: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx166742-io6yR2XeJiEh.jpg",
-      // 👇 LINE 164: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/manga/banner/166742-KqQyYzV8QQbk.jpg",
       rating: "8.4",
       year: "2024",
@@ -166,9 +150,7 @@
     {
       id: "mononoke-phantom-rain",
       title: "Mononoke The Movie: Phantom in the Rain",
-      // 👇 LINE 180: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151117-AOcwR3mXCDx7.jpg",
-      // 👇 LINE 182: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151117-6rtgumwWfoju.jpg",
       rating: "8.9",
       year: "2024",
@@ -183,9 +165,7 @@
     {
       id: "black-clover-movie",
       title: "Black Clover: Sword of the Wizard King",
-      // 👇 LINE 198: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx131680-gjs8mMQPmkOQ.png",
-      // 👇 LINE 200: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/131680-6jyC01S1Gila.jpg",
       rating: "8.6",
       year: "2023",
@@ -200,9 +180,7 @@
     {
       id: "your-name",
       title: "Your Name. (Kimi no Na wa)",
-      // 👇 LINE 216: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21519-SUo3ZQuCbYhJ.png",
-      // 👇 LINE 218: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21519-1ayMXgNlmByb.jpg",
       rating: "9.3",
       year: "2016",
@@ -216,9 +194,7 @@
     {
       id: "spirited-away",
       title: "Spirited Away",
-      // 👇 LINE 234: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx199-sWefXJvXkDOb.jpg",
-      // 👇 LINE 236: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/199-Sm2RU5PSqw7T.jpg",
       rating: "9.1",
       year: "2001",
@@ -232,9 +208,7 @@
     {
       id: "attack-on-titan-final",
       title: "Attack on Titan: The Final Season",
-      // 👇 LINE 252: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx110277-sKUNXAsWMNFw.jpg",
-      // 👇 LINE 254: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/110277-iuGn6F5bK1U1.jpg",
       rating: "9.4",
       year: "2023",
@@ -248,9 +222,7 @@
     {
       id: "naruto-shippuden",
       title: "Naruto: Shippuden",
-      // 👇 LINE 270: POSTER IMAGE URL (Vertical 2:3)
       poster: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1735-kGfVm0YqCPcu.png",
-      // 👇 LINE 272: BACKDROP BANNER URL (Landscape 16:9)
       banner: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/1735.jpg",
       rating: "8.7",
       year: "2017",
@@ -532,6 +504,17 @@
       contentWrap.classList.remove("slide-animate");
       void contentWrap.offsetWidth; // Force reflow
       contentWrap.classList.add("slide-animate");
+    }
+    var titleAreaEl = titleEl ? titleEl.closest(".hero-title-area") : null;
+    if (titleAreaEl) {
+      titleAreaEl.classList.remove("animating");
+      void titleAreaEl.offsetWidth;
+      titleAreaEl.classList.add("animating");
+    }
+    if (spotlightCard) {
+      spotlightCard.classList.remove("animating");
+      void spotlightCard.offsetWidth;
+      spotlightCard.classList.add("animating");
     }
 
     if (spotlightImg) {
@@ -1160,19 +1143,26 @@
     var heroEl = document.getElementById("heroBenchmarkSection");
     if (heroEl) {
       var startX = 0;
+      var startY = 0;
       heroEl.addEventListener("touchstart", function(e) {
-        startX = e.changedTouches[0].screenX;
+        if (e.touches && e.touches[0]) {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+        }
       }, { passive: true });
       heroEl.addEventListener("touchend", function(e) {
-        var diff = startX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 40) {
-          if (diff > 0) {
-            state.heroIndex = (state.heroIndex + 1) % Math.min(state.animeList.length, 5);
-          } else {
-            state.heroIndex = (state.heroIndex - 1 + Math.min(state.animeList.length, 5)) % Math.min(state.animeList.length, 5);
+        if (e.changedTouches && e.changedTouches[0]) {
+          var diffX = startX - e.changedTouches[0].clientX;
+          var diffY = startY - e.changedTouches[0].clientY;
+          if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+              state.heroIndex = (state.heroIndex + 1) % Math.min(state.animeList.length, 5);
+            } else {
+              state.heroIndex = (state.heroIndex - 1 + Math.min(state.animeList.length, 5)) % Math.min(state.animeList.length, 5);
+            }
+            updateHeroSlide(state.heroIndex);
+            startHeroAutoRotation();
           }
-          updateHeroSlide(state.heroIndex);
-          startHeroAutoRotation();
         }
       }, { passive: true });
     }
