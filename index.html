@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
-  <!-- Versioned Stylesheet Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <!-- Versioned Stylesheet Cache Busting v=4.0 -->
+  <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
 
@@ -39,100 +39,102 @@
       <button class="header-icon-action" onclick="window.ToonTheme && window.ToonTheme.toggle()" id="themeBtn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
       <button class="header-icon-action" onclick="window.ToonLang && window.ToonLang.toggle()" title="Toggle Language" aria-label="Toggle Language">🌐</button>
       <a href="anime.html" class="header-icon-action" title="Browse Library" aria-label="Browse Library">🎬</a>
-      <a href="login.html" class="admin-header-btn">Admin</a>
+      <button class="admin-header-btn" id="adminSpotlightBtn" onclick="window.openSpotlightManager && window.openSpotlightManager()">⚙️ Spotlight</button>
     </div>
   </header>
 
-  <!-- ═══ SEARCH BAR WITH INSTANT RESULTS OVERLAY ═══ -->
-  <div class="search-container" id="searchContainer">
-    <div class="search-glass-bar">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input type="text" id="searchInput" placeholder="Anime, movie, genre search karein..." autocomplete="off">
-      <button class="search-submit-btn" id="searchGoBtn">SEARCH</button>
-    </div>
-
-    <!-- Live Search Overlay -->
-    <div class="search-results-overlay" id="searchResultsOverlay" style="display: none;">
-      <div class="search-results-top">
-        <span id="searchResultsHeading">Search Results</span>
-        <button class="search-close-x" onclick="document.getElementById('searchResultsOverlay').style.display='none'" aria-label="Close Search">✕</button>
-      </div>
-      <div class="search-cards-grid" id="searchCardsGrid"></div>
-    </div>
-  </div>
-
-  <!-- ═══ ADVANCED FILTER ACCORDION ═══ -->
-  <div class="filter-dropdown-bar">
-    <button class="filter-dropdown-trigger" id="filterAccordionTrigger">
-      <span>⚡ Advanced Filter</span>
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="m6 9 6 6 6-6"/>
-      </svg>
-    </button>
-  </div>
-
-  <div class="filter-accordion-body" id="filterAccordionBody">
-    <div class="filter-grid-fields">
-      <div class="filter-field">
-        <label>📅 Release Year</label>
-        <select id="filterYearSelect">
-          <option value="All">All Years</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="Classic">Classic (&lt; 2020)</option>
-        </select>
-      </div>
-      <div class="filter-field">
-        <label>⭐ Minimum Rating</label>
-        <select id="filterRatingSelect">
-          <option value="All">Any Rating</option>
-          <option value="9">⭐ 9.0+ (Masterpiece)</option>
-          <option value="8.5">⭐ 8.5+ (Outstanding)</option>
-          <option value="8">⭐ 8.0+ (Great)</option>
-          <option value="7">⭐ 7.0+ (Good)</option>
-        </select>
-      </div>
-      <div class="filter-field">
-        <label>🎬 Format</label>
-        <select id="filterFormatSelect">
-          <option value="All">All Formats</option>
-          <option value="TV">TV Series</option>
-          <option value="MOVIE">Movie</option>
-          <option value="OVA">OVA / Special</option>
-        </select>
-      </div>
-    </div>
-    <div class="filter-actions-group">
-      <button class="filter-btn-apply" id="applyFilterBtn" onclick="window.location.href='anime.html'">Apply Filters</button>
-      <button class="filter-btn-reset" id="resetFilterBtn">Reset</button>
-    </div>
-  </div>
-
-  <!-- ═══ ANIREAL BENCHMARK HERO SECTION (ANIMATED BLURRED BACKDROP) ═══ -->
+  <!-- ═══ ANIREAL BENCHMARK IMMERSIVE HERO SECTION (FULL SCREEN EDGE-TO-EDGE) ═══ -->
+  <!-- The hero backdrop encompasses behind the search bar and filter controls up to the header -->
   <section class="hero-benchmark gpu-layer" id="heroBenchmarkSection">
-    <!-- Dual-Layer Dissolve Crossfade Backdrop (Single Accelerated Surface - No Distortion) -->
+    <!-- Dual-Layer Dissolve Crossfade Backdrop (Ken Burns 60fps Single Accelerated Surface) -->
     <div class="hero-backdrop-container" id="heroBackdropContainer">
       <div class="hero-backdrop-slide active" id="heroBackdropA" style="background-image: url('https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg');"></div>
       <div class="hero-backdrop-slide" id="heroBackdropB"></div>
       <div class="hero-backdrop-vignette"></div>
     </div>
 
-    <!-- Spotlight Content -->
+    <!-- Integrated Glass Search Bar & Filter floating over the Hero Backdrop -->
+    <div class="hero-top-controls">
+      <div class="search-container" id="searchContainer">
+        <div class="search-glass-bar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Anime, movie, genre search karein..." autocomplete="off">
+          <button class="search-submit-btn" id="searchGoBtn">SEARCH</button>
+        </div>
+
+        <!-- Live Search Overlay -->
+        <div class="search-results-overlay" id="searchResultsOverlay" style="display: none;">
+          <div class="search-results-top">
+            <span id="searchResultsHeading">Search Results</span>
+            <button class="search-close-x" onclick="document.getElementById('searchResultsOverlay').style.display='none'" aria-label="Close Search">✕</button>
+          </div>
+          <div class="search-cards-grid" id="searchCardsGrid"></div>
+        </div>
+      </div>
+
+      <!-- Advanced Filter Toggle Button -->
+      <div class="filter-dropdown-bar">
+        <button class="filter-dropdown-trigger" id="filterAccordionTrigger">
+          <span>⚡ Advanced Filter</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="filter-accordion-body" id="filterAccordionBody">
+        <div class="filter-grid-fields">
+          <div class="filter-field">
+            <label>📅 Release Year</label>
+            <select id="filterYearSelect">
+              <option value="All">All Years</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="Classic">Classic (&lt; 2020)</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>⭐ Minimum Rating</label>
+            <select id="filterRatingSelect">
+              <option value="All">Any Rating</option>
+              <option value="9">⭐ 9.0+ (Masterpiece)</option>
+              <option value="8.5">⭐ 8.5+ (Outstanding)</option>
+              <option value="8">⭐ 8.0+ (Great)</option>
+              <option value="7">⭐ 7.0+ (Good)</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>🎬 Format</label>
+            <select id="filterFormatSelect">
+              <option value="All">All Formats</option>
+              <option value="TV">TV Series</option>
+              <option value="MOVIE">Movie</option>
+              <option value="OVA">OVA / Special</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-actions-group">
+          <button class="filter-btn-apply" id="applyFilterBtn" onclick="window.location.href='anime.html'">Apply Filters</button>
+          <button class="filter-btn-reset" id="resetFilterBtn">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spotlight Content: Dynamic Text & Floating Anime Card with Face Focus -->
     <div class="hero-content-wrap" id="heroContentWrap">
       <div class="hero-spotlight-top">
-        <div class="hero-pill-badge">🔥 FEATURED SPOTLIGHT</div>
         <div class="hero-floating-card" id="heroSpotlightCard" data-anime-id="demon-slayer-hashira">
           <img id="heroSpotlightImg" src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png" alt="Demon Slayer Spotlight Poster">
           <div class="hero-floating-ep" id="heroSpotlightEp">Total Ep: 08</div>
         </div>
       </div>
 
-      <div class="hero-title-area">
+      <div class="hero-title-area" id="heroTitleArea">
         <h1 class="hero-title" id="heroAnimeTitle">Demon Slayer: Hashira Training Arc</h1>
         <div class="hero-meta-genres" id="heroAnimeGenres">
           <span>Action</span> • <span>Supernatural</span> • <span>Historical</span>
@@ -251,7 +253,7 @@
     <div class="shelf-horizontal-scroll" id="topMoviesGrid"></div>
   </section>
 
-  <!-- ═══ VIEW ALL ANIMES CTA (TERMINAL SECTION OF HOMEPAGE) ═══ -->
+  <!-- ═══ VIEW ALL ANIMES CTA ═══ -->
   <div class="view-all-center-box">
     <a href="anime.html" class="btn-view-all-animes">
       <span>View All Animes</span>
@@ -259,6 +261,108 @@
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
+  </div>
+
+  <!-- ═══ 🌟 ADMIN SPOTLIGHT MANAGER MODAL (ANILIST API & LIVE PREVIEW BOX) ═══ -->
+  <div class="admin-spotlight-modal" id="adminSpotlightModal" style="display: none;">
+    <div class="admin-spotlight-dialog">
+      <div class="admin-spotlight-header">
+        <div class="admin-spotlight-title">
+          <span class="admin-badge-pill">ADMIN PANEL</span>
+          <h2>Spotlight Manager &amp; AniList Search</h2>
+        </div>
+        <button class="btn-close-modal" onclick="window.closeSpotlightManager()" aria-label="Close Spotlight Manager">✕</button>
+      </div>
+
+      <div class="admin-spotlight-body">
+        <!-- 1. AniList Live Search Bar (ZERO API KEY REQUIRED) -->
+        <div class="anilist-search-box">
+          <label class="admin-field-label">🔍 Search AniList Public Database (Live Auto-Fetch):</label>
+          <div class="anilist-input-wrap">
+            <input type="text" id="anilistSearchInput" class="admin-input-text" placeholder="Type anime name (e.g. Solo Leveling, Bleach, Jujutsu Kaisen)..." autocomplete="off">
+            <button class="anilist-search-btn" id="anilistSearchBtn">Search</button>
+          </div>
+          <p class="admin-hint-text">⚡ Direct AniList GraphQL API integration. Automatically fetches 4K banners, official posters, episode counts, and tags.</p>
+
+          <!-- Search Results Dropdown/Grid -->
+          <div class="anilist-results-grid" id="anilistResultsGrid" style="display: none;"></div>
+        </div>
+
+        <!-- 2. Live Interactive Preview Box (Shows live site rendering) -->
+        <div class="spotlight-preview-card">
+          <div class="preview-header-bar">
+            <span>👁️ Live Website Preview Box (Cropping &amp; Face-Focus Verification)</span>
+            <span class="preview-mode-tag">Realtime Render</span>
+          </div>
+          
+          <div class="preview-hero-container">
+            <div class="preview-backdrop" id="previewBackdrop" style="background-image: url('https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg');"></div>
+            <div class="preview-vignette"></div>
+
+            <div class="preview-content">
+              <div class="preview-card-wrap">
+                <div class="preview-poster-card">
+                  <img id="previewPosterImg" src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png" alt="Spotlight Poster Preview">
+                  <div class="preview-ep-tag" id="previewEpTag">Total Ep: 08</div>
+                </div>
+              </div>
+              <div class="preview-info-wrap">
+                <h3 id="previewTitle">Demon Slayer: Hashira Training Arc</h3>
+                <p id="previewGenres">Action • Supernatural • Historical</p>
+                <div class="preview-buttons">
+                  <span class="preview-btn-fake play">▶ Play Now</span>
+                  <span class="preview-btn-fake list">+ My List</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Asset Gallery & Custom Link Overrides -->
+        <div class="spotlight-asset-gallery" id="spotlightAssetGallery" style="display: none;">
+          <label class="admin-field-label">🖼️ Select High-Resolution Art Asset:</label>
+          <div class="asset-chips-row" id="assetChipsRow"></div>
+        </div>
+
+        <div class="spotlight-fields-grid">
+          <div class="admin-form-group">
+            <label class="admin-field-label">Banner Image URL (Landscape Backdrop):</label>
+            <input type="text" id="spotlightBannerInput" class="admin-input-text" placeholder="https://... (16:9 Banner URL)">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-field-label">Poster Image URL (Vertical Card):</label>
+            <input type="text" id="spotlightPosterInput" class="admin-input-text" placeholder="https://... (2:3 Poster URL)">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-field-label">Anime Title:</label>
+            <input type="text" id="spotlightTitleInput" class="admin-input-text" placeholder="Anime Title">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-field-label">Genres &amp; Episode Info:</label>
+            <input type="text" id="spotlightMetaInput" class="admin-input-text" placeholder="Action, Adventure • Ep: 12">
+          </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="admin-actions-bar">
+          <button class="btn-admin-apply" id="applySpotlightBtn">
+            <span>🚀 Apply to Live Spotlight</span>
+          </button>
+          <button class="btn-admin-queue" id="addQueueSpotlightBtn">
+            <span>➕ Add to Spotlight Carousel</span>
+          </button>
+          <button class="btn-admin-cancel" onclick="window.closeSpotlightManager()">
+            <span>Cancel</span>
+          </button>
+        </div>
+
+        <!-- Active Carousel Queue List -->
+        <div class="active-spotlight-queue">
+          <label class="admin-field-label">📋 Current Active Spotlight Queue (Top 5 Slides):</label>
+          <div class="queue-cards-list" id="queueCardsList"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ═══ INTERACTIVE WATCH & DETAIL MODAL ═══ -->
@@ -281,13 +385,6 @@
           </div>
         </div>
 
-        <!-- Multi-Server Switcher -->
-        <div class="server-tabs-bar">
-          <button class="server-tab-btn active">⚡ Server 1 (HD Cloud)</button>
-          <button class="server-tab-btn">🚀 Server 2 (Fast Stream)</button>
-          <button class="server-tab-btn">🌟 VIP Hindi Audio</button>
-        </div>
-
         <!-- Season Selector -->
         <div class="modal-season-strip" id="modalSeasonStrip"></div>
 
@@ -299,7 +396,7 @@
           <a href="https://t.me/Anime_hindizone" target="_blank" rel="noopener" class="modal-action-btn tg" id="modalTgBtn">
             <span>📱 Stream on Telegram</span>
           </a>
-          <button class="modal-action-btn dl" onclick="window.showToast('⬇️ Download link generated!')">
+          <button class="modal-action-btn dl" onclick="window.showToast('⬇️ Instant Download Link Generated')">
             <span>⬇️ Instant Download</span>
           </button>
         </div>
@@ -402,9 +499,9 @@
     </a>
   </nav>
 
-  <!-- Firebase Compat SDKs & Core Logic with Cache Busting v=3.0 -->
+  <!-- Firebase Compat SDKs & Core Logic with Cache Busting v=4.0 -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=4.0"></script>
 </body>
 </html>
