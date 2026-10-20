@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // KYAMI ANIMES INDIA — MASTER SCRIPT ENGINE (60FPS)
-// High-Speed Animations, Dual-Layer Crossfade Carousel & Full Route Integration
+// High-Speed Animations, Dual-Layer Crossfade Carousel, AniList Public API (Zero Key),
+// Admin Spotlight Manager & Full Interactive Player Engine
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (function() {
@@ -243,7 +244,8 @@
     THEME: "kyami_anime_theme",
     LANG: "kyami_anime_lang",
     RATINGS: "kyami_anime_ratings",
-    TG_POPUP: "kyami_tg_popup_timestamp"
+    TG_POPUP: "kyami_tg_popup_timestamp",
+    SPOTLIGHT_CUSTOM: "kyami_spotlight_custom_list"
   };
 
   window.ToonFav = window.ToonFav || {
@@ -310,7 +312,7 @@
 
   // ═══ STATE ENGINE ═══
   var state = {
-    animeList: [...CURATED_FALLBACK_ANIME],
+    animeList: loadSavedSpotlights(),
     activeGenre: "All",
     activeLanguage: "All",
     filterYear: "All",
@@ -322,8 +324,25 @@
     heroAutoTimer: null,
     searchDebounce: null,
     activeAnimeModal: null,
-    activeSeasonKey: null
+    activeSeasonKey: null,
+    adminAniListResults: [],
+    selectedAdminAnime: null
   };
+
+  function loadSavedSpotlights() {
+    try {
+      var custom = JSON.parse(localStorage.getItem(STORAGE_KEYS.SPOTLIGHT_CUSTOM) || "null");
+      if (Array.isArray(custom) && custom.length > 0) {
+        var baseMap = new Map();
+        CURATED_FALLBACK_ANIME.forEach(function(item) { baseMap.set(item.id, item); });
+        custom.forEach(function(cItem) {
+          if (cItem && cItem.id) baseMap.set(cItem.id, Object.assign({}, baseMap.get(cItem.id) || {}, cItem));
+        });
+        return Array.from(baseMap.values());
+      }
+    } catch (e) {}
+    return [...CURATED_FALLBACK_ANIME];
+  }
 
   // ═══ TOAST NOTIFICATION ═══
   window.showToast = function(msg) {
@@ -342,7 +361,201 @@
     }, 2400);
   };
 
-  // ═══ FIREBASE REALTIME DB INTEGRATION (SAFEGUARDED AGAINST OVERWRITES) ═══
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // 🚀 1. ANILIST PUBLIC GRAPHQL API CLIENT (ZERO API KEYS REQUIRED)
+  // -----------------------------------------------------------------------------
+  // Completely public and open CORS endpoint: https://graphql.anilist.co
+  // Automatically fetches high-resolution 16:9 banners, 2:3 posters, metadata
+  // ═══════════════════════════════════════════════════════════════════════════════
+  var ANILIST_GRAPHQL_ENDPOINT = "https://graphql.anilist.co";
+  var ANILIST_SEARCH_QUERY = `
+    query ($search: String) {
+      Page(page: 1, perPage: 8) {
+        media(search: $search, type: ANIME, sort: POPULARITY_DESC) {
+          id
+          title {
+            english
+            romaji
+            native
+          }
+          coverImage {
+            extraLarge
+            large
+            medium
+            color
+          }
+          bannerImage
+          description(asHtml: false)
+          episodes
+          seasonYear
+          genres
+          averageScore
+          status
+          format
+        }
+      }
+    }
+  `;
+
+  function searchAniListAPI(query, callback) {
+    if (!query || query.trim().length < 2) {
+      if (callback) callback([]);
+      return;
+    }
+    fetch(ANILIST_GRAPHQL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        query: ANILIST_SEARCH_QUERY,
+        variables: { search: query.trim() }
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data && data.data && data.data.Page && data.data.Page.media) {
+        var results = data.data.Page.media.map(function(m) {
+          var cleanTitle = m.title.english || m.title.romaji || m.title.native || "Untitled";
+          var cleanDesc = m.description ? m.description.replace(/<[^>]*>?/gm, '').trim() : "";
+          var cleanScore = m.averageScore ? (m.averageScore / 10).toFixed(1) : "8.5";
+          var epCount = m.episodes ? ("Ep: " + (m.episodes < 10 ? "0" + m.episodes : m.episodes)) : (m.format === "MOVIE" ? "MOVIE" : "Ep: 12");
+          return {
+            id: "anilist-" + m.id,
+            title: cleanTitle,
+            poster: (m.coverImage && (m.coverImage.extraLarge || m.coverImage.large || m.coverImage.medium)) || "",
+            banner: m.bannerImage || (m.coverImage && m.coverImage.extraLarge) || "",
+            rating: cleanScore,
+            year: m.seasonYear ? String(m.seasonYear) : "2024",
+            genres: (m.genres && m.genres.length) ? m.genres.slice(0, 3).join(", ") : "Action, Adventure",
+            status: m.status ? m.status.toLowerCase() : "finished",
+            totalEp: epCount,
+            description: cleanDesc || "Watch high-definition anime streaming with dual audio on Kyami Animes India.",
+            rawCoverImages: m.coverImage,
+            rawBannerImage: m.bannerImage
+          };
+        });
+        if (callback) callback(results);
+      } else {
+        if (callback) callback([]);
+      }
+    })
+    .catch(function(err) {
+      console.warn("AniList API search failed:", err);
+      if (callback) callback([]);
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // ⚙️ 2. ADMIN SPOTLIGHT MANAGER CONTROLLER & LIVE PREVIEW BOX
+  // ═══════════════════════════════════════════════════════════════════════════════
+  window.openSpotlightManager = function() {
+    var modal = document.getElementById("adminSpotlightModal");
+    if (!modal) return;
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+
+    // Set initial live preview to current active hero spotlight anime
+    var currentHero = state.animeList[state.heroIndex] || state.animeList[0];
+    if (currentHero) {
+      selectAnimeForPreview(currentHero);
+    }
+    renderActiveQueueList();
+  };
+
+  window.closeSpotlightManager = function() {
+    var modal = document.getElementById("adminSpotlightModal");
+    if (!modal) return;
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+  };
+
+  function selectAnimeForPreview(anime) {
+    if (!anime) return;
+    state.selectedAdminAnime = Object.assign({}, anime);
+
+    var previewBackdrop = document.getElementById("previewBackdrop");
+    var previewPosterImg = document.getElementById("previewPosterImg");
+    var previewTitle = document.getElementById("previewTitle");
+    var previewGenres = document.getElementById("previewGenres");
+    var previewEpTag = document.getElementById("previewEpTag");
+
+    var bannerInput = document.getElementById("spotlightBannerInput");
+    var posterInput = document.getElementById("spotlightPosterInput");
+    var titleInput = document.getElementById("spotlightTitleInput");
+    var metaInput = document.getElementById("spotlightMetaInput");
+
+    var safeBanner = anime.banner || anime.poster;
+    var safePoster = anime.poster || safeBanner;
+
+    if (previewBackdrop) previewBackdrop.style.backgroundImage = 'url("' + safeBanner + '")';
+    if (previewPosterImg) previewPosterImg.src = safePoster;
+    if (previewTitle) previewTitle.textContent = anime.title;
+    if (previewGenres) previewGenres.textContent = anime.genres + " • " + (anime.year || "2024");
+    if (previewEpTag) previewEpTag.textContent = anime.totalEp || "Total Ep: 12";
+
+    if (bannerInput) bannerInput.value = safeBanner;
+    if (posterInput) posterInput.value = safePoster;
+    if (titleInput) titleInput.value = anime.title;
+    if (metaInput) metaInput.value = anime.genres + " • " + (anime.totalEp || "Ep: 12");
+
+    // Populate Asset Gallery Chips (Banners & Posters)
+    renderAssetGallery(anime);
+  }
+
+  function renderAssetGallery(anime) {
+    var galleryWrap = document.getElementById("spotlightAssetGallery");
+    var chipsRow = document.getElementById("assetChipsRow");
+    if (!galleryWrap || !chipsRow) return;
+
+    var assets = [];
+    if (anime.banner) assets.push({ label: "High-Res Banner (16:9)", url: anime.banner, type: "banner" });
+    if (anime.rawBannerImage && anime.rawBannerImage !== anime.banner) {
+      assets.push({ label: "Original AniList Banner", url: anime.rawBannerImage, type: "banner" });
+    }
+    if (anime.poster) assets.push({ label: "Official Poster (2:3)", url: anime.poster, type: "poster" });
+    if (anime.rawCoverImages) {
+      if (anime.rawCoverImages.extraLarge && anime.rawCoverImages.extraLarge !== anime.poster) {
+        assets.push({ label: "Extra Large Cover", url: anime.rawCoverImages.extraLarge, type: "poster" });
+      }
+      if (anime.rawCoverImages.large && anime.rawCoverImages.large !== anime.poster) {
+        assets.push({ label: "Alternate Large Cover", url: anime.rawCoverImages.large, type: "poster" });
+      }
+    }
+
+    if (!assets.length) {
+      galleryWrap.style.display = "none";
+      return;
+    }
+
+    galleryWrap.style.display = "block";
+    chipsRow.innerHTML = assets.map(function(asset) {
+      return (
+        '<button class="asset-chip-btn" data-asset-url="' + asset.url + '" data-asset-type="' + asset.type + '">' +
+          '<img class="asset-chip-thumb" src="' + asset.url + '" alt="' + asset.label + '">' +
+          '<span>' + asset.label + '</span>' +
+        '</button>'
+      );
+    }).join("");
+  }
+
+  function renderActiveQueueList() {
+    var listEl = document.getElementById("queueCardsList");
+    if (!listEl) return;
+    var queue = state.animeList.slice(0, 5);
+    listEl.innerHTML = queue.map(function(item, idx) {
+      return (
+        '<div class="queue-mini-card">' +
+          '<img src="' + item.poster + '" alt="' + item.title + '">' +
+          '<span>#' + (idx + 1) + ' ' + item.title.slice(0, 18) + (item.title.length > 18 ? '...' : '') + '</span>' +
+          (idx > 0 ? '<button class="queue-remove-btn" data-remove-queue-id="' + item.id + '" title="Remove from spotlight">✕</button>' : '') +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  // ═══ FIREBASE REALTIME DB INTEGRATION ═══
   function initFirebaseSync() {
     try {
       if (typeof firebase === "undefined" || !firebase.database) return;
@@ -363,16 +576,13 @@
           });
           
           var mergedMap = new Map();
-          // Seed map with verified high-resolution fallback records
           CURATED_FALLBACK_ANIME.forEach(function(item) { 
             mergedMap.set(item.id, Object.assign({}, item)); 
           });
 
-          // Carefully merge live records: NEVER allow broken, empty, or unsplash images to overwrite verified art!
           liveList.forEach(function(liveItem) {
             if (!liveItem || !liveItem.id) return;
             var fallback = mergedMap.get(liveItem.id);
-            
             if (fallback) {
               var safePoster = (liveItem.poster && typeof liveItem.poster === "string" && liveItem.poster.trim().length > 10 && !liveItem.poster.includes("unsplash.com")) 
                 ? liveItem.poster.trim() 
@@ -395,7 +605,6 @@
               });
               mergedMap.set(liveItem.id, merged);
             } else {
-              // Brand new record strictly from Firebase
               if (!liveItem.poster || liveItem.poster.includes("unsplash.com") || liveItem.poster.trim().length < 10) {
                 liveItem.poster = CURATED_FALLBACK_ANIME[0].poster;
               }
@@ -411,11 +620,11 @@
         }
       });
     } catch (err) {
-      console.warn("Firebase sync running with verified offline fallback:", err);
+      console.warn("Firebase sync running with offline fallback:", err);
     }
   }
 
-  // ═══ 1. FLEXIBLE ANIME CARD BUILDER (SUPPORTS 16:10 LANDSCAPE & 2:3 PORTRAIT) ═══
+  // ═══ 3. FLEXIBLE ANIME CARD BUILDER (16:10 WIDESCREEN & 2:3 PORTRAIT) ═══
   function buildAnimeCardHTML(anime, rank, isLandscape) {
     var isOngoing = anime.status === "ongoing" || (anime.totalEp && anime.totalEp.toLowerCase().includes("ongoing"));
     var statusClass = isOngoing ? "ongoing" : "finished";
@@ -425,7 +634,7 @@
     var genrePrimary = (anime.genres || "Anime").split(",")[0].trim();
     var isFav = window.ToonFav.isFav(anime.id);
 
-    // If landscape mode (New Releases shelf), use high-resolution banner image
+    // If landscape mode (New Releases shelf), use 16:10 banner
     var imgUrl = isLandscape 
       ? ((anime.banner && !anime.banner.includes("unsplash.com")) ? anime.banner : anime.poster)
       : ((anime.poster && !anime.poster.includes("unsplash.com")) ? anime.poster : "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png");
@@ -457,7 +666,7 @@
     );
   }
 
-  // ═══ 2 & 3. DUAL-LAYER DISSOLVE HERO CAROUSEL CONTROLLER (60FPS CROSSFADE) ═══
+  // ═══ 4. DUAL-LAYER CROSSFADE HERO CAROUSEL CONTROLLER (60FPS) ═══
   function updateHeroSlide(index) {
     if (!state.animeList.length) return;
     var heroList = state.animeList.slice(0, 5);
@@ -467,6 +676,7 @@
     var layerA = document.getElementById("heroBackdropA");
     var layerB = document.getElementById("heroBackdropB");
     var contentWrap = document.getElementById("heroContentWrap");
+    var titleAreaEl = document.getElementById("heroTitleArea");
     var spotlightCard = document.getElementById("heroSpotlightCard");
     var spotlightImg = document.getElementById("heroSpotlightImg");
     var spotlightEp = document.getElementById("heroSpotlightEp");
@@ -479,7 +689,7 @@
       ? item.banner 
       : item.poster;
 
-    // Dual-Layer Crossfade: Incoming layer preloads and dissolves smoothly over outgoing layer
+    // Dual-Layer Crossfade Dissolve
     if (layerA && layerB) {
       var isACurrent = layerA.classList.contains("active");
       var incomingLayer = isACurrent ? layerB : layerA;
@@ -499,13 +709,12 @@
       preloader.src = nextBanner;
     }
 
-    // Trigger subtle, silky smooth slide animation on spotlight card & text
+    // Synchronized Kinematic Slide Animations (Video Editor Keyframe Physics)
     if (contentWrap) {
       contentWrap.classList.remove("slide-animate");
       void contentWrap.offsetWidth; // Force reflow
       contentWrap.classList.add("slide-animate");
     }
-    var titleAreaEl = titleEl ? titleEl.closest(".hero-title-area") : null;
     if (titleAreaEl) {
       titleAreaEl.classList.remove("animating");
       void titleAreaEl.offsetWidth;
@@ -556,7 +765,6 @@
     renderPopular();
     renderTopMovies();
     renderGenreChips();
-    renderLanguageChips();
     renderBrowseGridIfPresent();
   }
 
@@ -624,7 +832,7 @@
   }
 
   function renderGenreChips() {
-    var el = document.getElementById("genreChipsScroll") || document.getElementById("genreChipsScrollStrip");
+    var el = document.getElementById("genreChipsScroll");
     if (!el) return;
     var genres = new Set(["All"]);
     state.animeList.forEach(function(a) {
@@ -636,16 +844,6 @@
     el.innerHTML = Array.from(genres).map(function(g) {
       var isActive = g.toLowerCase() === state.activeGenre.toLowerCase();
       return '<button class="filter-chip ' + (isActive ? 'active' : '') + '" data-genre-chip="' + g + '">' + g + '</button>';
-    }).join("");
-  }
-
-  function renderLanguageChips() {
-    var el = document.getElementById("languageChipsScroll");
-    if (!el) return;
-    var langs = ["All", "Hindi", "English", "Japanese", "Tamil", "Telugu", "Bangla", "Chinese"];
-    el.innerHTML = langs.map(function(l) {
-      var isActive = l.toLowerCase() === state.activeLanguage.toLowerCase();
-      return '<button class="filter-chip ' + (isActive ? 'active' : '') + '" data-lang-chip="' + l + '">' + l + '</button>';
     }).join("");
   }
 
@@ -706,15 +904,14 @@
 
   // ═══ SEARCH ENGINE (DEBOUNCED & INSTANT) ═══
   function executeSearch(query) {
-    var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
-    var grid = document.getElementById("searchCardsGrid") || document.getElementById("searchOverlayResults");
+    var overlay = document.getElementById("searchResultsOverlay");
+    var grid = document.getElementById("searchCardsGrid");
     var title = document.getElementById("searchResultsHeading");
     if (!overlay || !grid) return;
 
     var q = (query || "").trim().toLowerCase();
     if (!q) {
       overlay.style.display = "none";
-      overlay.classList.remove("active");
       return;
     }
 
@@ -723,12 +920,10 @@
       var g = (a.genres || "").toLowerCase();
       var y = String(a.year || "");
       var l = (a.language || "").toLowerCase();
-      var d = (a.description || "").toLowerCase();
-      return t.includes(q) || g.includes(q) || y.includes(q) || l.includes(q) || d.includes(q);
+      return t.includes(q) || g.includes(q) || y.includes(q) || l.includes(q);
     });
 
     overlay.style.display = "block";
-    overlay.classList.add("active");
     if (title) title.textContent = matches.length + ' result' + (matches.length === 1 ? '' : 's') + ' for "' + query + '"';
 
     if (!matches.length) {
@@ -758,15 +953,15 @@
     if (!anime) return;
     state.activeAnimeModal = anime;
 
-    var modal = document.getElementById("animeModalBackdrop") || document.getElementById("watchModal");
-    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
-    var title = document.getElementById("modalAnimeTitle") || document.getElementById("watchModalTitle");
+    var modal = document.getElementById("animeModalBackdrop");
+    var iframe = document.getElementById("modalPlayerIframe");
+    var title = document.getElementById("modalAnimeTitle");
     var poster = document.getElementById("modalAnimePoster");
     var desc = document.getElementById("modalAnimeDesc");
-    var tags = document.getElementById("modalTagsContainer") || document.getElementById("watchMetaGenres");
-    var seasonStrip = document.getElementById("modalSeasonStrip") || document.getElementById("watchSeasonsStrip");
-    var epGrid = document.getElementById("modalEpisodesGrid") || document.getElementById("watchEpisodesGrid");
-    var teleBtn = document.getElementById("watchTelegramBtn");
+    var tags = document.getElementById("modalTagsContainer");
+    var seasonStrip = document.getElementById("modalSeasonStrip");
+    var epGrid = document.getElementById("modalEpisodesGrid");
+    var teleBtn = document.getElementById("modalTgBtn");
 
     if (title) title.textContent = anime.title || "Anime Player";
     if (poster) poster.src = anime.poster || "";
@@ -774,15 +969,13 @@
     if (iframe) iframe.src = anime.trailer || "https://www.youtube.com/embed/to2lh1oYqU4?autoplay=1";
     if (teleBtn) teleBtn.href = anime.telegram || "https://t.me/Anime_hindizone";
 
-    if (tags && !document.getElementById("watchMetaGenres")) {
+    if (tags) {
       tags.innerHTML = [
         anime.year ? '<span class="modal-tag">📅 ' + anime.year + '</span>' : '',
         anime.rating ? '<span class="modal-tag">⭐ ' + anime.rating + '</span>' : '',
         '<span class="modal-tag">📢 ' + (anime.language || 'Hindi Dubbed') + '</span>',
         '<span class="modal-tag">HD 1080p</span>'
       ].join("");
-    } else if (document.getElementById("watchMetaGenres")) {
-      document.getElementById("watchMetaGenres").textContent = (anime.language || "Hindi Dubbed") + " • " + (anime.genres || "Anime");
     }
 
     var seasons = anime.seasons || {
@@ -823,14 +1016,13 @@
 
     if (modal) {
       modal.classList.add("active");
-      modal.classList.add("open");
       document.body.style.overflow = "hidden";
     }
   }
 
   function renderModalEpisodes(episodesObj, activeEpNum) {
-    var epGrid = document.getElementById("modalEpisodesGrid") || document.getElementById("watchEpisodesGrid");
-    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+    var epGrid = document.getElementById("modalEpisodesGrid");
+    var iframe = document.getElementById("modalPlayerIframe");
     if (!epGrid || !episodesObj) return;
 
     var eps = Object.values(episodesObj);
@@ -843,9 +1035,9 @@
       var num = ep.number || 1;
       var isCurrent = num === (activeEpNum || 1);
       return (
-        '<button class="modal-ep-btn ep-item-btn ' + (isCurrent ? 'active current' : '') + '" data-ep-num="' + num + '" data-stream-url="' + (ep.streaming || "") + '">' +
-          '<span class="modal-ep-num">' + num + '</span>' +
-          '<span>' + (ep.title || ('Ep ' + num)) + '</span>' +
+        '<button class="modal-ep-btn ' + (isCurrent ? 'active' : '') + '" data-ep-num="' + num + '" data-stream-url="' + (ep.streaming || "") + '">' +
+          '<span>Ep ' + num + '</span>' +
+          '<span>' + (ep.title || ('Episode ' + num)) + '</span>' +
         '</button>'
       );
     }).join("");
@@ -857,12 +1049,11 @@
   }
 
   function closeAnimeModal() {
-    var modal = document.getElementById("animeModalBackdrop") || document.getElementById("watchModal");
-    var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+    var modal = document.getElementById("animeModalBackdrop");
+    var iframe = document.getElementById("modalPlayerIframe");
     if (iframe) iframe.src = "";
     if (modal) {
       modal.classList.remove("active");
-      modal.classList.remove("open");
       document.body.style.overflow = "";
     }
     state.activeAnimeModal = null;
@@ -898,14 +1089,14 @@
     }
   };
 
-  // ═══ TELEGRAM JOIN POPUP (With Cooldown) ═══
+  // ═══ TELEGRAM JOIN POPUP ═══
   function initTelegramPopup() {
     var lastShown = localStorage.getItem(STORAGE_KEYS.TG_POPUP);
     var cooldown = 24 * 60 * 60 * 1000;
     if (lastShown && (Date.now() - parseInt(lastShown, 10)) < cooldown) return;
 
     setTimeout(function() {
-      var overlay = document.getElementById("tgPopupOverlay") || document.getElementById("telegramPopupModal");
+      var overlay = document.getElementById("tgPopupOverlay");
       if (overlay) {
         overlay.classList.add("show");
         localStorage.setItem(STORAGE_KEYS.TG_POPUP, Date.now().toString());
@@ -914,16 +1105,15 @@
   }
 
   window.closeTgPopup = function() {
-    var overlay = document.getElementById("tgPopupOverlay") || document.getElementById("telegramPopupModal");
+    var overlay = document.getElementById("tgPopupOverlay");
     if (overlay) overlay.classList.remove("show");
   };
-  window.closeTelegramPopup = window.closeTgPopup;
 
   // ═══ UNIFIED HIGH-PERFORMANCE EVENT DELEGATION ═══
   function attachEventDelegation() {
     document.addEventListener("click", function(e) {
       // 1. Favorite Heart Button
-      var favBtn = e.target.closest(".card-fav-action, .card-fav-btn");
+      var favBtn = e.target.closest(".card-fav-action");
       if (favBtn) {
         e.stopPropagation();
         var favId = favBtn.dataset.favId;
@@ -931,9 +1121,7 @@
         if (anime) {
           var added = window.ToonFav.toggle(anime);
           favBtn.classList.toggle("active", added);
-          var svg = favBtn.querySelector("svg");
-          if (svg) svg.setAttribute("fill", added ? "currentColor" : "none");
-          else favBtn.textContent = added ? "❤️" : "🤍";
+          favBtn.textContent = added ? "❤️" : "🤍";
           window.showToast(added ? "❤️ Added to My List" : "Removed from My List");
         }
         return;
@@ -951,17 +1139,14 @@
       var searchCard = e.target.closest(".search-mini-card");
       if (searchCard) {
         var sid = searchCard.dataset.animeId;
-        var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
-        if (overlay) {
-          overlay.style.display = "none";
-          overlay.classList.remove("active");
-        }
+        var overlay = document.getElementById("searchResultsOverlay");
+        if (overlay) overlay.style.display = "none";
         if (sid) openAnimeModal(sid, 1);
         return;
       }
 
       // 4. Hero Spotlight Card Click
-      var heroCard = e.target.closest("#heroSpotlightCard, .hero-floating-card");
+      var heroCard = e.target.closest("#heroSpotlightCard");
       if (heroCard) {
         var hcId = heroCard.dataset.animeId || state.animeList[state.heroIndex].id;
         if (hcId) openAnimeModal(hcId, 1);
@@ -969,7 +1154,7 @@
       }
 
       // 5. Hero Action: Play Now
-      var heroPlay = e.target.closest("#heroPlayAction, .btn-play-hero");
+      var heroPlay = e.target.closest("#heroPlayAction");
       if (heroPlay) {
         var aId = heroPlay.dataset.animeId || state.animeList[state.heroIndex].id;
         if (aId) openAnimeModal(aId, 1);
@@ -977,7 +1162,7 @@
       }
 
       // 6. Hero Add to My List
-      if (e.target.closest("#heroMyListAction, .btn-mylist-hero")) {
+      if (e.target.closest("#heroMyListAction")) {
         var currentHero = state.animeList[state.heroIndex];
         if (currentHero) {
           var addedHero = window.ToonFav.toggle(currentHero);
@@ -1007,21 +1192,10 @@
         return;
       }
 
-      // 9. Language Chips
-      var langChip = e.target.closest("[data-lang-chip]");
-      if (langChip) {
-        state.activeLanguage = langChip.dataset.langChip;
-        state.currentPage = 1;
-        document.querySelectorAll("[data-lang-chip]").forEach(function(c) { c.classList.remove("active"); });
-        langChip.classList.add("active");
-        renderBrowseGridIfPresent();
-        return;
-      }
-
-      // 10. Pagination Clicks
-      var pageBtn = e.target.closest(".page-btn, [data-page-num]");
+      // 9. Pagination Clicks
+      var pageBtn = e.target.closest(".page-btn");
       if (pageBtn && !pageBtn.disabled) {
-        var targetPage = parseInt(pageBtn.dataset.page || pageBtn.dataset.pageNum, 10);
+        var targetPage = parseInt(pageBtn.dataset.page, 10);
         if (targetPage && targetPage !== state.currentPage) {
           state.currentPage = targetPage;
           renderBrowseGridIfPresent();
@@ -1030,18 +1204,18 @@
         return;
       }
 
-      // 11. Modal Close
-      if (e.target.closest("#modalCloseBtn, .modal-close-trigger, .btn-close-modal") || e.target.id === "animeModalBackdrop" || e.target.id === "watchModal") {
+      // 10. Modal Close
+      if (e.target.closest("#modalCloseBtn") || e.target.id === "animeModalBackdrop") {
         closeAnimeModal();
         return;
       }
 
-      // 12. Modal Season Switch
-      var seasonTab = e.target.closest(".modal-season-tab, .season-tab-btn");
+      // 11. Modal Season Switch
+      var seasonTab = e.target.closest(".modal-season-tab");
       if (seasonTab) {
         var sKey = seasonTab.dataset.seasonKey;
         state.activeSeasonKey = sKey;
-        document.querySelectorAll(".modal-season-tab, .season-tab-btn").forEach(function(t) { t.classList.remove("active"); });
+        document.querySelectorAll(".modal-season-tab").forEach(function(t) { t.classList.remove("active"); });
         seasonTab.classList.add("active");
         if (state.activeAnimeModal && state.activeAnimeModal.seasons) {
           renderModalEpisodes(state.activeAnimeModal.seasons[sKey], 1);
@@ -1049,28 +1223,224 @@
         return;
       }
 
-      // 13. Modal Episode Select
-      var epBtn = e.target.closest(".modal-ep-btn, .ep-item-btn");
+      // 12. Modal Episode Select
+      var epBtn = e.target.closest(".modal-ep-btn");
       if (epBtn) {
-        document.querySelectorAll(".modal-ep-btn, .ep-item-btn").forEach(function(b) { b.classList.remove("active", "current"); });
-        epBtn.classList.add("active", "current");
+        document.querySelectorAll(".modal-ep-btn").forEach(function(b) { b.classList.remove("active"); });
+        epBtn.classList.add("active");
         var epNum = epBtn.dataset.epNum;
         var streamUrl = epBtn.dataset.streamUrl;
-        var iframe = document.getElementById("modalPlayerIframe") || document.getElementById("watchVideoIframe");
+        var iframe = document.getElementById("modalPlayerIframe");
         if (iframe && streamUrl) iframe.src = streamUrl;
         window.showToast("▶ Loading Episode " + epNum + "...");
         return;
       }
 
-      // 14. Telegram Popup Outside Click
-      if (e.target.id === "tgPopupOverlay" || e.target.id === "telegramPopupModal") {
+      // 13. Telegram Popup Outside Click
+      if (e.target.id === "tgPopupOverlay") {
         window.closeTgPopup();
+        return;
+      }
+
+      // 14. Admin AniList Card Result Click
+      var anilistCard = e.target.closest(".anilist-card-result");
+      if (anilistCard) {
+        var animeIdx = parseInt(anilistCard.dataset.resultIndex, 10);
+        var chosen = state.adminAniListResults[animeIdx];
+        if (chosen) {
+          selectAnimeForPreview(chosen);
+          window.showToast("🖼️ Loaded artwork for " + chosen.title);
+        }
+        return;
+      }
+
+      // 15. Admin Asset Chip Click
+      var assetChip = e.target.closest(".asset-chip-btn");
+      if (assetChip) {
+        var aUrl = assetChip.dataset.assetUrl;
+        var aType = assetChip.dataset.assetType;
+        document.querySelectorAll(".asset-chip-btn").forEach(function(c) { c.classList.remove("active"); });
+        assetChip.classList.add("active");
+
+        if (aType === "banner") {
+          var pb = document.getElementById("previewBackdrop");
+          var bi = document.getElementById("spotlightBannerInput");
+          if (pb) pb.style.backgroundImage = 'url("' + aUrl + '")';
+          if (bi) bi.value = aUrl;
+        } else {
+          var pp = document.getElementById("previewPosterImg");
+          var pi = document.getElementById("spotlightPosterInput");
+          if (pp) pp.src = aUrl;
+          if (pi) pi.value = aUrl;
+        }
+        window.showToast("✅ Applied asset to preview");
+        return;
+      }
+
+      // 16. Admin Remove Queue Item
+      var remBtn = e.target.closest("[data-remove-queue-id]");
+      if (remBtn) {
+        var remId = remBtn.dataset.removeQueueId;
+        state.animeList = state.animeList.filter(function(x) { return x.id !== remId; });
+        saveSpotlightsLocally();
+        renderActiveQueueList();
+        renderHeroSection();
+        window.showToast("🗑️ Removed from spotlight");
         return;
       }
     });
 
+    // ── AniList Search Input Debounce ──
+    var anilistInput = document.getElementById("anilistSearchInput");
+    var anilistBtn = document.getElementById("anilistSearchBtn");
+    var anilistResultsEl = document.getElementById("anilistResultsGrid");
+
+    function runAniListSearch(q) {
+      if (!q || q.length < 2) {
+        if (anilistResultsEl) anilistResultsEl.style.display = "none";
+        return;
+      }
+      if (anilistResultsEl) {
+        anilistResultsEl.style.display = "grid";
+        anilistResultsEl.innerHTML = '<p style="color:var(--electric-blue);padding:14px;font-size:0.85rem;">⏳ Fetching from AniList public database...</p>';
+      }
+      searchAniListAPI(q, function(results) {
+        state.adminAniListResults = results;
+        if (!results.length) {
+          anilistResultsEl.innerHTML = '<p style="color:var(--text-muted);padding:14px;font-size:0.85rem;">Koi anime nahi mila. Try different name.</p>';
+          return;
+        }
+        anilistResultsEl.innerHTML = results.map(function(item, idx) {
+          return (
+            '<div class="anilist-card-result" data-result-index="' + idx + '">' +
+              '<img class="anilist-result-poster" src="' + item.poster + '" alt="' + item.title + '">' +
+              '<div class="anilist-result-info">' +
+                '<h4 class="anilist-result-title">' + item.title + '</h4>' +
+                '<p class="anilist-result-sub">⭐ ' + item.rating + ' • ' + item.year + ' • ' + item.totalEp + '</p>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join("");
+      });
+    }
+
+    if (anilistInput) {
+      var anilistDebounce = null;
+      anilistInput.addEventListener("input", function(e) {
+        clearTimeout(anilistDebounce);
+        anilistDebounce = setTimeout(function() {
+          runAniListSearch(e.target.value);
+        }, 300);
+      });
+      anilistInput.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          runAniListSearch(anilistInput.value);
+        }
+      });
+    }
+
+    if (anilistBtn && anilistInput) {
+      anilistBtn.addEventListener("click", function() {
+        runAniListSearch(anilistInput.value);
+      });
+    }
+
+    // Live Custom Field typing -> updates Live Preview Box
+    var bannerInput = document.getElementById("spotlightBannerInput");
+    var posterInput = document.getElementById("spotlightPosterInput");
+    var titleInput = document.getElementById("spotlightTitleInput");
+
+    if (bannerInput) {
+      bannerInput.addEventListener("input", function(e) {
+        var pb = document.getElementById("previewBackdrop");
+        if (pb && e.target.value.trim().length > 5) {
+          pb.style.backgroundImage = 'url("' + e.target.value.trim() + '")';
+        }
+      });
+    }
+    if (posterInput) {
+      posterInput.addEventListener("input", function(e) {
+        var pp = document.getElementById("previewPosterImg");
+        if (pp && e.target.value.trim().length > 5) {
+          pp.src = e.target.value.trim();
+        }
+      });
+    }
+    if (titleInput) {
+      titleInput.addEventListener("input", function(e) {
+        var pt = document.getElementById("previewTitle");
+        if (pt) pt.textContent = e.target.value.trim() || "Anime Title";
+      });
+    }
+
+    // Apply Button: Set as Primary Hero Spotlight
+    var applyBtn = document.getElementById("applySpotlightBtn");
+    if (applyBtn) {
+      applyBtn.addEventListener("click", function() {
+        var bVal = (bannerInput ? bannerInput.value.trim() : "") || (state.selectedAdminAnime ? state.selectedAdminAnime.banner : "");
+        var pVal = (posterInput ? posterInput.value.trim() : "") || (state.selectedAdminAnime ? state.selectedAdminAnime.poster : "");
+        var tVal = (titleInput ? titleInput.value.trim() : "") || (state.selectedAdminAnime ? state.selectedAdminAnime.title : "Featured Anime");
+        var metaVal = document.getElementById("spotlightMetaInput") ? document.getElementById("spotlightMetaInput").value.trim() : "Action, Adventure";
+
+        if (!pVal) {
+          window.showToast("⚠️ Please select or provide a poster image URL.");
+          return;
+        }
+
+        var newSpotlight = {
+          id: state.selectedAdminAnime ? state.selectedAdminAnime.id : ("custom-" + Date.now()),
+          title: tVal,
+          banner: bVal || pVal,
+          poster: pVal,
+          genres: metaVal.split("•")[0].trim() || "Action, Fantasy",
+          totalEp: metaVal.includes("•") ? metaVal.split("•")[1].trim() : "Ep: 12",
+          rating: (state.selectedAdminAnime && state.selectedAdminAnime.rating) ? state.selectedAdminAnime.rating : "9.0",
+          year: (state.selectedAdminAnime && state.selectedAdminAnime.year) ? state.selectedAdminAnime.year : "2024",
+          status: "ongoing",
+          description: (state.selectedAdminAnime && state.selectedAdminAnime.description) ? state.selectedAdminAnime.description : "Watch high-definition anime streaming on Kyami Animes India."
+        };
+
+        // Place at index 0 of spotlight queue
+        state.animeList = state.animeList.filter(function(x) { return x.id !== newSpotlight.id; });
+        state.animeList.unshift(newSpotlight);
+        state.heroIndex = 0;
+
+        saveSpotlightsLocally();
+        updateHeroSlide(0);
+        renderActiveQueueList();
+        renderAllSections();
+        window.closeSpotlightManager();
+        window.showToast("🚀 Live Spotlight Updated Successfully!");
+      });
+    }
+
+    // Add to Queue Button
+    var queueBtn = document.getElementById("addQueueSpotlightBtn");
+    if (queueBtn) {
+      queueBtn.addEventListener("click", function() {
+        if (!state.selectedAdminAnime) {
+          window.showToast("⚠️ Select an anime from search first.");
+          return;
+        }
+        var target = Object.assign({}, state.selectedAdminAnime);
+        state.animeList = state.animeList.filter(function(x) { return x.id !== target.id; });
+        state.animeList.splice(1, 0, target);
+        saveSpotlightsLocally();
+        renderActiveQueueList();
+        renderHeroSection();
+        window.showToast("➕ Added to Spotlight Carousel Queue!");
+      });
+    }
+
+    function saveSpotlightsLocally() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.SPOTLIGHT_CUSTOM, JSON.stringify(state.animeList.slice(0, 8)));
+      } catch (e) {}
+    }
+
     // Top Search Input Listener
-    var searchInput = document.getElementById("searchInput") || document.getElementById("siteSearchInput");
+    var searchInput = document.getElementById("searchInput");
     if (searchInput) {
       searchInput.addEventListener("input", function(e) {
         clearTimeout(state.searchDebounce);
@@ -1080,11 +1450,8 @@
       });
       searchInput.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
-          var overlay = document.getElementById("searchResultsOverlay") || document.getElementById("searchOverlayModal");
-          if (overlay) {
-            overlay.style.display = "none";
-            overlay.classList.remove("active");
-          }
+          var overlay = document.getElementById("searchResultsOverlay");
+          if (overlay) overlay.style.display = "none";
         }
       });
     }
@@ -1097,8 +1464,8 @@
     }
 
     // Advanced Filter Toggle
-    var filterTrigger = document.getElementById("filterAccordionTrigger") || document.getElementById("searchFilterToggle");
-    var filterBody = document.getElementById("filterAccordionBody") || document.getElementById("advancedFiltersPanel");
+    var filterTrigger = document.getElementById("filterAccordionTrigger");
+    var filterBody = document.getElementById("filterAccordionBody");
     if (filterTrigger && filterBody) {
       filterTrigger.addEventListener("click", function() {
         filterBody.classList.toggle("open");
@@ -1108,8 +1475,8 @@
     var applyFilterBtn = document.getElementById("applyFilterBtn");
     if (applyFilterBtn) {
       applyFilterBtn.addEventListener("click", function() {
-        var ySel = document.getElementById("filterYearSelect") || document.getElementById("filterSelectYear");
-        var rSel = document.getElementById("filterRatingSelect") || document.getElementById("filterSelectRating");
+        var ySel = document.getElementById("filterYearSelect");
+        var rSel = document.getElementById("filterRatingSelect");
         if (ySel) state.filterYear = ySel.value;
         if (rSel) state.filterRating = rSel.value;
         state.currentPage = 1;
@@ -1122,8 +1489,8 @@
     var resetFilterBtn = document.getElementById("resetFilterBtn");
     if (resetFilterBtn) {
       resetFilterBtn.addEventListener("click", function() {
-        var ySel = document.getElementById("filterYearSelect") || document.getElementById("filterSelectYear");
-        var rSel = document.getElementById("filterRatingSelect") || document.getElementById("filterSelectRating");
+        var ySel = document.getElementById("filterYearSelect");
+        var rSel = document.getElementById("filterRatingSelect");
         if (ySel) ySel.value = "All";
         if (rSel) rSel.value = "All";
         state.filterYear = "All";
@@ -1132,14 +1499,13 @@
         state.activeLanguage = "All";
         state.currentPage = 1;
         renderGenreChips();
-        renderLanguageChips();
         renderBrowseGridIfPresent();
         window.showToast("🔄 Filters Reset");
         if (filterBody) filterBody.classList.remove("open");
       });
     }
 
-    // Touch Swipe on Hero Spotlight
+    // ── Multi-Axis Touch Swipe on Hero Spotlight ──
     var heroEl = document.getElementById("heroBenchmarkSection");
     if (heroEl) {
       var startX = 0;
