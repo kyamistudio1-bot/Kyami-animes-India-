@@ -542,17 +542,18 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HERO SPOTLIGHT SECTION (DUAL-LAYER DISSOLVE & KEN BURNS 60FPS)
+   HERO SPOTLIGHT SECTION (IMMERSIVE FULL-SCREEN CINEMATIC ATMOSPHERE)
    ═══════════════════════════════════════════════════════════════ */
 .hero-benchmark {
   position: relative;
-  margin: 10px 16px 20px;
-  border-radius: var(--radius-xl);
+  width: 100%;
+  margin: 0 0 24px 0;
+  border-radius: 0 0 28px 28px;
   overflow: hidden;
-  min-height: 400px;
+  min-height: 440px;
   background: #060813;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), 0 0 35px rgba(37, 99, 235, 0.25);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(37, 99, 235, 0.25);
   transform: translate3d(0, 0, 0);
   isolation: isolate;
 }
@@ -582,7 +583,7 @@ body {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center 25%;
+  background-position: center 22%;
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1);
@@ -595,15 +596,15 @@ body {
   opacity: 0.95;
 }
 
-/* Atmospheric Vignette Overlay (Guarantees Vivid Artwork Visibility, NOT pitch black) */
+/* Atmospheric Vignette Overlay matching AniReal benchmark:
+   Natural top fade, crystal clear character area, smooth bottom dissolve for text */
 .hero-backdrop-vignette {
   position: absolute;
   inset: 0;
   z-index: 2;
   background: 
-    linear-gradient(180deg, rgba(6, 8, 19, 0.05) 0%, rgba(6, 8, 19, 0.25) 40%, rgba(6, 8, 19, 0.88) 85%, rgba(6, 8, 19, 0.98) 100%),
-    radial-gradient(circle at 75% 30%, rgba(56, 189, 248, 0.16) 0%, transparent 65%),
-    radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.2) 0%, transparent 55%);
+    linear-gradient(180deg, rgba(6, 8, 19, 0.1) 0%, rgba(6, 8, 19, 0.2) 35%, rgba(6, 8, 19, 0.75) 70%, #060813 100%),
+    radial-gradient(circle at 80% 35%, rgba(56, 189, 248, 0.12) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -615,36 +616,24 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 400px;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  min-height: 440px;
 }
 
-/* Slide animation hook for seamless transitions */
-@keyframes heroContentSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-content-wrap.slide-animate {
-  animation: heroContentSlideIn 0.35s var(--ease-spring) forwards;
+/* Hide unaligned pink pill badge to match Video 1 AniReal reference */
+.hero-pill-badge {
+  display: none !important;
 }
 
 .hero-spotlight-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
   margin-bottom: 16px;
 }
 
-/* Floating Card with Character Face Focus (Center 15%) */
+/* Floating Card with Character Face Focus (Center 15%) & Glowing Border */
 .hero-floating-card {
-  width: 135px;
+  width: 130px;
   aspect-ratio: 2/3;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -685,26 +674,44 @@ body {
   padding: 5px;
   border-top: 1px solid rgba(56, 189, 248, 0.4);
   letter-spacing: 0.3px;
+  backdrop-filter: blur(8px);
 }
 
-.hero-pill-badge {
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 6px 14px;
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.25) 0%, rgba(225, 29, 72, 0.35) 100%);
-  border: 1px solid rgba(244, 63, 94, 0.6);
-  border-radius: var(--radius-full);
-  color: #fca5a5;
-  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+/* Kinematic Keyframe Slide & Fade Animations matching Reference Video */
+@keyframes heroTextSlideIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-18px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroCardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(24px, 0, 0) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 .hero-title-area {
   max-width: 600px;
+}
+
+.hero-content-wrap.slide-animate .hero-title-area,
+.hero-title-area.animating {
+  animation: heroTextSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-content-wrap.slide-animate .hero-floating-card,
+.hero-floating-card.animating {
+  animation: heroCardSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-title {
@@ -712,7 +719,7 @@ body {
   font-weight: 800;
   line-height: 1.25;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
 }
 
@@ -721,14 +728,14 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   margin-bottom: 16px;
+  font-weight: 500;
 }
 
 .hero-meta-genres span {
-  color: var(--electric-blue);
-  font-weight: 600;
+  color: #cbd5e1;
 }
 
 .hero-actions-row {
@@ -739,19 +746,17 @@ body {
 }
 
 .btn-play-hero {
-  flex: 1;
-  max-width: 170px;
-  background: linear-gradient(135deg, #0284c7 0%, var(--primary-blue) 100%);
-  color: #ffffff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: var(--radius-full);
-  font-size: 0.92rem;
-  font-weight: 700;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, var(--primary-blue) 100%);
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
   transition: all 0.25s var(--ease-spring);
@@ -768,16 +773,17 @@ body {
 }
 
 .btn-mylist-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #ffffff;
-  padding: 12px 20px;
+  padding: 10px 22px;
   border-radius: var(--radius-full);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   cursor: pointer;
   transition: all 0.25s var(--ease-spring);
 }
@@ -788,27 +794,27 @@ body {
   transform: translateY(-2px);
 }
 
-/* Carousel Indicator Dots */
+/* Minimalist indicator dots */
 .hero-indicators {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 18px;
+  gap: 6px;
+  margin-top: 16px;
 }
 
 .hero-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.25);
-  transition: all 0.3s var(--ease-spring);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .hero-dot.active {
-  width: 24px;
+  width: 20px;
   background: var(--electric-blue);
-  box-shadow: 0 0 12px var(--electric-blue);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -860,6 +866,7 @@ body {
 
 .share-btn.whatsapp:hover { background: rgba(37, 211, 102, 0.2); border-color: #25d366; }
 .share-btn.telegram:hover { background: rgba(0, 136, 204, 0.2); border-color: #0088cc; }
+.share-btn.facebook:hover { background: rgba(24, 119, 242, 0.2); border-color: #1877f2; }
 .share-btn.twitter:hover, .share-btn.x-twitter:hover { background: rgba(29, 155, 240, 0.2); border-color: #1d9bf0; }
 .share-btn.copy:hover { background: rgba(56, 189, 248, 0.2); border-color: var(--electric-blue); }
 
